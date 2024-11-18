@@ -46,6 +46,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump() // 점프
     {
-        playerRigidbody2D.AddForce(transform.up * jumpForce); // 위로 jumpForce만큼 올라감
+        
     }
 }
