@@ -13,8 +13,10 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce; // 점프할 높이    
 
     private bool moveReturn; // 메서드 리턴(작동 x) 
-    // 변수의 은닉성을 위해 프로퍼티 사용
     
+    private Animator animator;
+
+    // 변수의 은닉성을 위해 프로퍼티 사용
     public bool MoveReturn { get { return moveReturn; } set {  moveReturn = value; } }
     private void Start()
     {
@@ -22,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody2D = GetComponent<Rigidbody2D>();
 
         playerTransform = GetComponent<Transform>();
+
+        animator = GetComponent<Animator>();    
 
         jumpForce = 500;
 
@@ -48,4 +52,21 @@ public class PlayerMovement : MonoBehaviour
     {
         
     }
+
+    private void OnCollisionStay2D(Collision2D collision) 
+    { 
+        if (collision.gameObject.CompareTag("Planet")) // 충돌중인 물체의 태그가 행성이라면
+        {
+            animator.SetBool("IsGround", true); // 애니메이터 Bool 변수 True 변경 (떨어지는 애니메이션 작동X)
+        }        
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Planet")) // 충돌중인 물체의 태그가 행성이라면
+        {
+            animator.SetBool("IsGround", false); // 애니메이터 Bool 변수 false 변경 (떨어지는 애니메이션 작동)
+        }
+    }
 }
+
