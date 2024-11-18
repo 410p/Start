@@ -6,7 +6,7 @@ public class ColliderDetct : MonoBehaviour
 {
     private PlayerMovement playerMovement ;// PlayerMovement 클래스
 
-    private void OnCollisionStay(Collision collision) // 만약 화면 끝에 닿는중이라면
+    private void OnCollisionStay2D(Collision2D collision) // 만약 화면 끝에 닿는중이라면
     {
         if (collision.gameObject.CompareTag("Player")) // 충돌체의 태그가 플레이어라면
         {
@@ -35,5 +35,5 @@ public class ColliderDetct : MonoBehaviour
                 }
             }
         }
-    }
+    }   
 }
