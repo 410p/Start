@@ -8,6 +8,7 @@ TagManager:
   - Beam
   - Left Collider
   - Right Collider
+  - PlanetDestroyZone
   layers:
   - Default
   - TransparentFX
