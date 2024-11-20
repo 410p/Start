@@ -30,7 +30,7 @@ public class ObjectPooling : MonoBehaviour
     // 스폰 가능한지
     private bool returnSpawn = false;
     public bool ReturnSpawn { set { returnSpawn = value; } }
-
+    
     private void Start()
     {
         // 값 할당
@@ -42,8 +42,7 @@ public class ObjectPooling : MonoBehaviour
         randomSpawnMinY = 1.25f;
         randomSpawnMaxY = 4;
         #endregion
-
-
+        
         for (int i = 0; i < 3; i++)
         {
             // 랜덤 스폰 위치 할당 + 플레이어 위치
