@@ -27,6 +27,10 @@ public class ObjectPooling : MonoBehaviour
     // 최종 스폰 위치
     private Vector2 randomSpawnPos;
 
+    // 스폰 가능한지
+    private bool returnSpawn = false;
+    public bool ReturnSpawn { set { returnSpawn = value; } }
+
     private void Start()
     {
         // 값 할당
@@ -55,6 +59,8 @@ public class ObjectPooling : MonoBehaviour
     // 행성 풀링
     public void PlanetsPooling()
     {
+        // 생성가능 한지, 아니라면 리턴
+        if (returnSpawn) return;
 
         // 만약 행성의 갯수랑 인덱스랑 숫자가 같다면 첫번째 행성을 가져오는 코드
         if (planetInedx == planetsTr.Length)
@@ -70,7 +76,7 @@ public class ObjectPooling : MonoBehaviour
         // 행성 위치를 이동
         planetsTr[planetInedx].position = randomSpawnPos;
 
-        Debug.Log(planetInedx);       
+        //Debug.Log(planetInedx);
 
         // 인덱스 증감
         planetInedx++;

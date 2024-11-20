@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     //현재 점프가 가능한지
     private bool isPossibleToJump;
 
+    // 오브젝트 풀링 스크립트
+    [SerializeField] ObjectPooling objectPooling;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -28,7 +31,15 @@ public class PlayerMovement : MonoBehaviour
         //플레이어 속도가 0이라면 점프 가능한 상태
         if (playerRigidbody.velocity.y < 0)
         {
+            // 내려가는 상태라면 행성 스폰 X
+            objectPooling.ReturnSpawn = true; 
+
             isPossibleToJump = true;
+        }
+        else
+        { 
+            // 올라가는 상태라면 행성 스폰 가능
+            objectPooling.ReturnSpawn = false;
         }
 
         #endregion

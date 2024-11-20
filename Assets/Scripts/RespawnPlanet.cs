@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public class StandbyPos : MonoBehaviour
+public class RespawnPlanet : MonoBehaviour
 {
     // 풀링 스크립트
     [SerializeField] ObjectPooling objectPooling;
