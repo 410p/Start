@@ -101,13 +101,15 @@ public class ObjectPooling : MonoBehaviour
         planetIndex++;
         #endregion
 
+        // 매개변수가 가스형 행성을 스폰하라고 한다면
         if (spawnPlanet_Gas)
         {
+            // 스폰하는 최종 위치 
             randomSpawnPos = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), (Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y));
 
             //Debug.Log(randomSpawnPos);        
 
-            // 행성 위치를 이동
+            // 가스형 행성 위치를 이동
             planetsTr_Gas[planet_GasIndex].position = randomSpawnPos;
 
             //Debug.Log(planetInedx);
