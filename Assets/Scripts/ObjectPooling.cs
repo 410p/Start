@@ -17,6 +17,7 @@ public class ObjectPooling : MonoBehaviour
 
     // 플레이어 트랜스폼
     [SerializeField] Transform playerTr;
+    public Transform PlayerTr => playerTr;
 
     private void Awake()
     {
@@ -32,9 +33,10 @@ public class ObjectPooling : MonoBehaviour
 
     private void Start()
     {
-        // 시작할 때 한 번 추가
+        // 시작할 때 생성 추가
         for (int i = 0; i < 22; i++)
         {
+            // 생성 높이를 다르게 설정
             randomSpawnPos_Planet = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), (Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + i));
 
 
@@ -43,7 +45,22 @@ public class ObjectPooling : MonoBehaviour
 
 
 
-        }        
+        }
+
+        // 시작할 때 배경 추가
+        for (int j = 0; j < backGrounds.Length; j++)
+        {
+            // 생성 높이를 다르게 설정
+            randomSpawnPos_BG = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), (Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + j));
+
+            // 배경 위치를 이동
+            backGrounds[j].transform.position = randomSpawnPos_BG;
+
+
+            backGrounds[j].GetComponent<BackGround>().InUse = true;
+        }
+
+
     }
 
     private void Update()
@@ -110,6 +127,39 @@ public class ObjectPooling : MonoBehaviour
         beamEnemy[beamEnemyIndex].GetComponent<BeamEnemy>().OnSetting(randomSpawnPos_BeamEnemy);
 
         beamEnemyIndex++;
+    }
+    #endregion
+
+    #region// 배경 생성
+    // 배경 배열
+    [SerializeField] GameObject[] backGrounds;
+
+    // 배경 배열의 인덱스 
+    private int backGroundIndex;
+
+    // 배경의 랜덤 위치
+    private Vector2 randomSpawnPos_BG;
+
+
+    // 배경 랜덤 생성
+    public void RandomBGSpawn()
+    {
+        backGroundIndex = Random.Range(0, backGrounds.Length);
+
+        // 만약 인덱스로 뽑은 배경이 사용중이라면 다시 뽑음
+        while (backGrounds[backGroundIndex].GetComponent<BackGround>().InUse == true)
+        {
+            backGroundIndex = Random.Range(0, backGrounds.Length);
+        }
+
+        // 랜덤 위치 뽑기
+        randomSpawnPos_BG = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), (Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y));
+
+        // 배경 위치를 이동
+        backGrounds[backGroundIndex].transform.position = randomSpawnPos_BG;
+
+
+        backGrounds[backGroundIndex].GetComponent<BackGround>().InUse = true;
     }
     #endregion
 }

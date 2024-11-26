@@ -5,7 +5,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 public class BeamEnemy : MonoBehaviour
 {
     // 대기위치
-    private Vector2 StandbyPos;      
+    private Vector2 StandbyPos;
 
     // 적이 발사할 빔
     [SerializeField] Sprite[] beams;
@@ -45,7 +45,7 @@ public class BeamEnemy : MonoBehaviour
 
     // 오브젝트 능력치 초기화
     private void OffSetting()
-    {             
+    {
         // 대기위치로 이동            
         transform.position = StandbyPos;
     }
@@ -53,12 +53,12 @@ public class BeamEnemy : MonoBehaviour
     // 오브젝트 위치 설정
     public void OnSetting(Vector2 pos)
     {
-        gameObject.transform.position = pos;        
+        gameObject.transform.position = pos;
 
         StartCoroutine(FireBeam());
     }
 
-    
+
 
     // 빔을 발사하는 함수
     private IEnumerator FireBeam()
@@ -67,7 +67,7 @@ public class BeamEnemy : MonoBehaviour
         Beam_intersection.SetActive(true);
 
         // 처음 발사까지 걸리는 시간
-        yield return beamFirstFireTime; 
+        yield return beamFirstFireTime;
 
         while (beamsIndex < beams.Length)
         {

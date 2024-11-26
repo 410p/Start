@@ -22,13 +22,10 @@ public class HPmanager : MonoBehaviour
         // 처음 시작하면 hp추가
         for (int i = 0; i < 3; i++)
         {
-            // hp추가 및 관리 리스트 추가
-            spawnHP = Instantiate(hpPrefab, hpParent);
-            hpPrefabManager.Add(spawnHP);
+            AddHp();
+        }
 
-        }              
-
-    }   
+    }
 
     // 체력 더하기
     private void AddHp()

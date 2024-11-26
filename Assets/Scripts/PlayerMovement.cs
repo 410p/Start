@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // 플레이어의 Rigidbody2D
     private Rigidbody2D playerRigidbody;
 
     //플레이어 점프 속도
@@ -16,14 +18,20 @@ public class PlayerMovement : MonoBehaviour
     // 오브젝트 풀링 스크립트
     [SerializeField] ObjectPooling objectPooling;
 
-    // Start is called before the first frame update
+    // 캐릭터의 총 도착지점
+    private Vector2 endPos;
+
+    // 마우스의 X축 위치
+    private float playerX;
+
+
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         isPossibleToJump = true;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         #region 점프 구현
@@ -32,12 +40,12 @@ public class PlayerMovement : MonoBehaviour
         if (playerRigidbody.velocity.y < 0)
         {
             // 내려가는 상태라면 행성 스폰 X
-            objectPooling.ReturnSpawn = true; 
+            objectPooling.ReturnSpawn = true;
 
             isPossibleToJump = true;
         }
         else
-        { 
+        {
             // 올라가는 상태라면 행성 스폰 가능
             objectPooling.ReturnSpawn = false;
         }
@@ -46,9 +54,14 @@ public class PlayerMovement : MonoBehaviour
 
         #region 이동 구현
 
-        //플레이어의 x좌표를 Full HD(1920x1080)에서의 마우스 x좌표로 이동
-        float playerX = Input.mousePosition.x / 1920 * 18 - 9;
-        transform.position = new Vector3(playerX, transform.position.y);
+        // 마우스의 위치
+        playerX = Input.mousePosition.x / 1920 * 18 - 9;
+
+        // 캐릭터의 총 도착지점
+        endPos = new Vector2(playerX, transform.position.y);
+
+        // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 (선형보간의 시간 : 낮을수록 빠르게 간다)
+        transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
 
         #endregion
     }
@@ -61,9 +74,11 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("Planet") && isPossibleToJump) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때
         {
             //Debug.Log("조건문 실행!");
-            playerRigidbody.velocity = new Vector2(0, 0.1f); //y속도 초기화
+            playerRigidbody.velocity = new Vector2(0, 0.8f); //y속도 초기화
             playerRigidbody.AddForce(new Vector2(0, speed)); //y방향으로 speed만큼 힘 주기
             isPossibleToJump = false; //점프한 직후 충돌 불가로 설정
         }
     }
+
+
 }
