@@ -1024,6 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1306060746}
+  gamemanager: {fileID: 720832865}
 --- !u!1001 &520204795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1394,6 +1395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 720832863}
   - component: {fileID: 720832864}
+  - component: {fileID: 720832865}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1430,7 +1432,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpParent: {fileID: 477554499}
   hpPrefab: {fileID: 6865869980976001004, guid: 0ace53fe479942f4998567f546d10173, type: 3}
-  hpPrefabManager: []
+--- !u!114 &720832865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720832861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd925a7274d39e47b39fc0fa9137e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGameObject: {fileID: 1306060746}
 --- !u!1 &731281107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8130593524052771694, guid: 2926d69b0ccca6947ba30dd7bdd6f876, type: 3}
@@ -2617,6 +2631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 650
   objectPooling: {fileID: 1728222158}
+  gamemanager: {fileID: 720832865}
 --- !u!70 &1306060751
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

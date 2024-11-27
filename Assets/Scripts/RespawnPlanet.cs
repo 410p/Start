@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RespawnPlanet : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class RespawnPlanet : MonoBehaviour
 
             objectPooling.PlanetsPooling(collision.gameObject);
 
+        }
+        else if (collision.CompareTag("Player")) // 태그가 Player라면 로드 씬
+        {
+            //SceneManager.LoadScene();
+
+            //Debug.Log("로드씬");
         }
     }
    

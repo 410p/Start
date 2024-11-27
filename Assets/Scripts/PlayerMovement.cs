@@ -18,36 +18,57 @@ public class PlayerMovement : MonoBehaviour
     // 오브젝트 풀링 스크립트
     [SerializeField] ObjectPooling objectPooling;
 
+    // 게임매니저 스크립트
+    [SerializeField] Gamemanager gamemanager;
+    public Gamemanager Gamemanager => gamemanager;
     // 캐릭터의 총 도착지점
     private Vector2 endPos;
 
     // 마우스의 X축 위치
     private float playerX;
 
+    // 플레이어 애니메이터
+    private Animator playerAnimator;
 
-    private void Start()
+    private void Awake()
     {
+        // 할당
+
         playerRigidbody = GetComponent<Rigidbody2D>();
+
         isPossibleToJump = true;
+
+        playerAnimator = GetComponent<Animator>();
     }
 
 
     void Update()
     {
-        #region 점프 구현
+        if (gamemanager.GameOver == true) return;
+
+        #region 점프 구현        
 
         //플레이어 속도가 0이라면 점프 가능한 상태
         if (playerRigidbody.velocity.y < 0)
         {
+            // 플레이어의 속도가 20만큼 떨어진다면 죽음 함수 호출
+            if (playerRigidbody.velocity.y <= -20) gamemanager.Die();
+
             // 내려가는 상태라면 행성 스폰 X
+            playerAnimator.SetBool("IsJump", false);
+
             objectPooling.ReturnSpawn = true;
 
             isPossibleToJump = true;
+
         }
         else
         {
             // 올라가는 상태라면 행성 스폰 가능
+            playerAnimator.SetBool("IsJump", true);
+
             objectPooling.ReturnSpawn = false;
+
         }
 
         #endregion
