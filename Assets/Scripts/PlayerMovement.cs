@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     // 게임매니저 스크립트
     [SerializeField] Gamemanager gamemanager;
     public Gamemanager Gamemanager => gamemanager;
+
+    // hp매니저 스크립트
+    [SerializeField] HpManager hpManager;
+
     // 캐릭터의 총 도착지점
     private Vector2 endPos;
 
@@ -29,6 +33,14 @@ public class PlayerMovement : MonoBehaviour
 
     // 플레이어 애니메이터
     private Animator playerAnimator;
+
+    //점프 효과를 받고 있는지
+    private bool isJumpBoost;
+    //마지막 시간
+    private float prevTime;
+
+    [SerializeField]
+    private float jumpBoostCooldown;
 
     private void Awake()
     {
@@ -85,12 +97,20 @@ public class PlayerMovement : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
 
         #endregion
+
+        if (Time.time - prevTime >= jumpBoostCooldown && isJumpBoost)
+        {
+            isJumpBoost = false;
+            speed -= 200f;
+        }
     }
 
     Collider2D c2;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        #region 행성 충돌
+
         //Debug.Log("충돌 감지!");
         if (collision.CompareTag("Planet") && isPossibleToJump) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때
         {
@@ -99,6 +119,33 @@ public class PlayerMovement : MonoBehaviour
             playerRigidbody.AddForce(new Vector2(0, speed)); //y방향으로 speed만큼 힘 주기
             isPossibleToJump = false; //점프한 직후 충돌 불가로 설정
         }
+        #endregion
+
+        #region 아이템 충돌
+        if (collision.CompareTag("Item"))
+        {
+            //점프 아이템
+            if (collision.name.Contains("Item_JumpPower"))
+            {
+                if (!isJumpBoost)
+                {
+                    speed += 200f;
+                    isJumpBoost = true;
+                }
+                prevTime = Time.time;
+            }
+            //체력 아이템
+            else if (collision.name.Contains("Item_Life"))
+            {
+                hpManager.AddHp();
+            }
+            else if (collision.name.Contains("Item_Shield"))
+            {
+                //쉴드
+            }
+            Destroy(collision.gameObject);
+        }
+        #endregion
     }
 
 

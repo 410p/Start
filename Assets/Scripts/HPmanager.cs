@@ -38,9 +38,11 @@ public class HpManager : MonoBehaviour
     public void AddHp()
     {
         // hp추가 및 관리 리스트 추가
-        spawnHP = Instantiate(hpPrefab, hpParent);
-        hpPrefabManager.Add(spawnHP);
-
+        if (hpPrefabManager.Count < 3)
+        {
+            spawnHP = Instantiate(hpPrefab, hpParent);
+            hpPrefabManager.Add(spawnHP);
+        }
     }
 
     // 체력 빼기
