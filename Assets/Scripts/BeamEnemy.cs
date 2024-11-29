@@ -22,9 +22,12 @@ public class BeamEnemy : MonoBehaviour
     // 빔 스프라이트 변경할 대기시간(최적화)
     private WaitForSeconds beamDelay;
 
+    // 빔 스프라이트가 최대에서 작아지는 시간
+    private WaitForSeconds maxBeamDelay;
+
     // 빔 스프라이트를 다시 제거하는 시간(최적화)
     private WaitForSeconds beamDestroyDelay;
-
+    
     // 빔의 공격 사거리
     [SerializeField] GameObject Beam_intersection;
     private void Start()
@@ -38,6 +41,8 @@ public class BeamEnemy : MonoBehaviour
         beamDestroyDelay = new WaitForSeconds(0.1f);
 
         beamFirstFireTime = new WaitForSeconds(1f);
+
+        maxBeamDelay = new WaitForSeconds(1);
 
         // 대기 위치 정의
         StandbyPos = new Vector2(32.45f, 0.83f);
@@ -80,6 +85,9 @@ public class BeamEnemy : MonoBehaviour
 
 
         }
+
+        // 최대에서 기다리는 시간
+        yield return maxBeamDelay;
 
         StartCoroutine(DestroyBeam());
     }

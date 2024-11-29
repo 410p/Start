@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // 플레이어의 Rigidbody2D
     private Rigidbody2D playerRigidbody;
+    public Rigidbody2D PlayerRigidbody => playerRigidbody;
 
     //플레이어 점프 속도
     [SerializeField]
@@ -22,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Gamemanager gamemanager;
     public Gamemanager Gamemanager => gamemanager;
 
-    // hp매니저 스크립트
-    [SerializeField] HpManager hpManager;
+    // HpManager 스크립트
+    [SerializeField] HpManager hpManager;    
 
     // 캐릭터의 총 도착지점
     private Vector2 endPos;
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         isPossibleToJump = true;
 
-        playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();        
     }
 
 
@@ -58,61 +59,63 @@ public class PlayerMovement : MonoBehaviour
     {
         if (gamemanager.GameOver == true) return;
 
-        #region 점프 구현        
-
-        //플레이어 속도가 0이라면 점프 가능한 상태
-        if (playerRigidbody.velocity.y < 0)
+        // 게임 시작했다면
+        if (gamemanager.GameStart == true)
         {
-            // 플레이어의 속도가 20만큼 떨어진다면 죽음 함수 호출
-            if (playerRigidbody.velocity.y <= -20) gamemanager.Die();
+            #region 점프 구현  
 
-            // 내려가는 상태라면 행성 스폰 X
-            playerAnimator.SetBool("IsJump", false);
 
-            objectPooling.ReturnSpawn = true;
+            //플레이어 속도가 0이라면 점프 가능한 상태
+            if (playerRigidbody.velocity.y < 0)
+            {
+                // 플레이어의 속도가 20만큼 떨어진다면 죽음 함수 호출
+                if (playerRigidbody.velocity.y <= -20) gamemanager.Die();
 
-            isPossibleToJump = true;
+                // 내려가는 상태라면 행성 스폰 X
+                playerAnimator.SetBool("IsJump", false);
 
-        }
-        else
-        {
-            // 올라가는 상태라면 행성 스폰 가능
-            playerAnimator.SetBool("IsJump", true);
+                objectPooling.ReturnSpawn = true;
 
-            objectPooling.ReturnSpawn = false;
+                isPossibleToJump = true;
 
-        }
+            }
+            else
+            {
+                // 올라가는 상태라면 행성 스폰 가능
+                playerAnimator.SetBool("IsJump", true);
 
-        #endregion
+                objectPooling.ReturnSpawn = false;
 
-        #region 이동 구현
+            }
 
-        // 마우스의 위치
-        playerX = Input.mousePosition.x / 1920 * 18 - 9;
 
-        // 캐릭터의 총 도착지점
-        endPos = new Vector2(playerX, transform.position.y);
+            #endregion
 
-        // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 (선형보간의 시간 : 낮을수록 빠르게 간다)
-        transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
+            #region 이동 구현
 
-        #endregion
 
-        if (Time.time - prevTime >= jumpBoostCooldown && isJumpBoost)
-        {
-            isJumpBoost = false;
-            speed -= 200f;
+
+            // 마우스의 위치
+            playerX = Input.mousePosition.x / 1920 * 18 - 9;
+
+            // 캐릭터의 총 도착지점
+            endPos = new Vector2(playerX, transform.position.y);
+
+            // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 (선형보간의 시간 : 낮을수록 빠르게 간다)
+            transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
+
+            #endregion
         }
     }
-
     Collider2D c2;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         #region 행성 충돌
 
         //Debug.Log("충돌 감지!");
-        if (collision.CompareTag("Planet") && isPossibleToJump) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때
+        if (collision.CompareTag("Planet") && isPossibleToJump || collision.CompareTag("Planet_Start")) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 그리고 시작행성일 때 시작
         {
             //Debug.Log("조건문 실행!");
             playerRigidbody.velocity = new Vector2(0, 0.8f); //y속도 초기화
@@ -124,6 +127,9 @@ public class PlayerMovement : MonoBehaviour
         #region 아이템 충돌
         if (collision.CompareTag("Item"))
         {
+            // 대기위치로 이동
+            collision.GetComponent<Item>().Setting();
+
             //점프 아이템
             if (collision.name.Contains("Item_JumpPower"))
             {
@@ -141,9 +147,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (collision.name.Contains("Item_Shield"))
             {
-                //쉴드
-            }
-            Destroy(collision.gameObject);
+                //실드
+            }            
         }
         #endregion
     }

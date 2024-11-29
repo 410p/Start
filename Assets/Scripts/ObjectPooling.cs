@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
@@ -33,17 +30,17 @@ public class ObjectPooling : MonoBehaviour
 
     private void Start()
     {
+
         // 시작할 때 생성 추가
-        for (int i = 0; i < 22; i++)
+        for (int i = 0; i < 24; i++)
         {
             // 생성 높이를 다르게 설정
             randomSpawnPos_Planet = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), (Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + i));
 
 
+
             // 행성 위치를 이동
             planetsTr[i].position = randomSpawnPos_Planet;
-
-
 
         }
 
@@ -59,15 +56,29 @@ public class ObjectPooling : MonoBehaviour
 
             backGrounds[j].GetComponent<BackGround>().InUse = true;
         }
-
-
     }
 
     private void Update()
     {
+        // 빔 쏘는 적
         if (Input.GetKeyDown(KeyCode.W))
         {
             SpawnBeamEnemy();
+        }
+        // 실드
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            ItemShieldSpawn();
+        }
+        // 체력 추가
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            ItemLifeSpawn();
+        }
+        // 점프력 증가
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            ItemJumpPowerSpawn();
         }
     }
 
@@ -92,7 +103,7 @@ public class ObjectPooling : MonoBehaviour
         if (returnSpawn) return;
 
         // 랜덤 위치 뽑기
-        randomSpawnPos_Planet = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), (Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y));
+        randomSpawnPos_Planet = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
 
         //Debug.Log(randomSpawnPos);        
 
@@ -103,7 +114,7 @@ public class ObjectPooling : MonoBehaviour
     }
     #endregion
 
-    #region// 적 생성
+    #region// 빔 쏘는 적 생성
 
     // 빔 쏘는 적 배열
     [SerializeField] GameObject[] beamEnemy;
@@ -117,6 +128,7 @@ public class ObjectPooling : MonoBehaviour
     // 빔 쏘는 적 생성
     private void SpawnBeamEnemy()
     {
+        // 인덱스 변수가 배열의 끝까지 도달했다면 0으로 초기화
         if (beamEnemyIndex >= beamEnemy.Length) beamEnemyIndex = 0;
 
         randomSpawnPos_BeamEnemy = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), playerTr.position.y + 7.5f);
@@ -160,6 +172,68 @@ public class ObjectPooling : MonoBehaviour
 
 
         backGrounds[backGroundIndex].GetComponent<BackGround>().InUse = true;
+    }
+    #endregion
+
+    #region// 아이템 생성
+
+    // 실드 아이템
+    [SerializeField] GameObject[] item_Shield;
+    // 순서대로 아이템을 가져오는 인덱스 변수
+    private int item_ShieldIndex;
+
+
+    // 체력 아이템
+    [SerializeField] GameObject[] item_Life;
+    private int item_LifeIndex;
+
+    // 점프력 증가 아이템
+    [SerializeField] GameObject[] item_JumpPower;
+    private int item_JumpPowerIndex;
+
+    // 아이템을 랜덤으로 스폰하는 위치
+    private Vector2 randomSpawnPos_Item;
+
+    // 실드 아이템 스폰
+    public void ItemShieldSpawn()
+    {
+        // 인덱스 변수가 배열의 끝까지 도달했다면 0으로 초기화
+        if (item_ShieldIndex >= item_Shield.Length) item_ShieldIndex = 0;
+
+        // 랜덤 위치 뽑기
+        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
+
+        item_Shield[item_ShieldIndex].transform.position = randomSpawnPos_Item;
+
+        item_ShieldIndex++;
+    }
+
+    // 체력 아이템 스폰
+    public void ItemLifeSpawn()
+    {
+        // 인덱스 변수가 배열의 끝까지 도달했다면 0으로 초기화
+        if (item_LifeIndex >= item_Life.Length) item_LifeIndex = 0;
+
+        // 랜덤 위치 뽑기
+        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
+
+        item_Life[item_LifeIndex].transform.position = randomSpawnPos_Item;
+
+        item_LifeIndex++;
+    }
+
+    // 점프력 증가 아이템 뽑기
+    public void ItemJumpPowerSpawn()
+    {
+        // 인덱스 변수가 배열의 끝까지 도달했다면 0으로 초기화
+        if (item_JumpPowerIndex >= item_JumpPower.Length) item_JumpPowerIndex = 0;
+
+        // 랜덤 위치 뽑기
+        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
+
+        item_JumpPower[item_JumpPowerIndex].transform.position = randomSpawnPos_Item;
+
+        item_JumpPowerIndex++;
     }
     #endregion
 }

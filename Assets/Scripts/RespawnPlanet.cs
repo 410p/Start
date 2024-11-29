@@ -26,6 +26,10 @@ public class RespawnPlanet : MonoBehaviour
 
             //Debug.Log("·Îµå¾À");
         }
+        else if (collision.CompareTag("Item"))
+        {
+            collision.GetComponent<Item>().Setting();
+        }
     }
    
 }

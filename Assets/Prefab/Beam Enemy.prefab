@@ -71,10 +71,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1884128571
+  m_SortingLayerID: -628890631
   m_SortingLayer: 3
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: a4e82f6384d31944599823e0dfddd205, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 457f055cb78d4d1448db45b1529dd441, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -191,9 +191,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1884128571
+  m_SortingLayerID: -628890631
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: bc2ac4eb820d4474cbb5a093d5e282ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -290,6 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beams:
+  - {fileID: 21300000, guid: 457f055cb78d4d1448db45b1529dd441, type: 3}
   - {fileID: 21300000, guid: a4e82f6384d31944599823e0dfddd205, type: 3}
   - {fileID: 21300000, guid: c9f1891c30a9b9049816681e2d9a127a, type: 3}
   - {fileID: 21300000, guid: 58ff3844de9ce2548982528db1e6e7df, type: 3}
@@ -298,7 +299,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 99c651e022c103c459b4b408250d52ba, type: 3}
   - {fileID: 21300000, guid: 458ebae368471eb4db048e4d3bebfcd9, type: 3}
   - {fileID: 21300000, guid: 111b29019fa20744583f458f7986502b, type: 3}
-  - {fileID: 21300000, guid: 22144197022af82468d2f5d76edcf73f, type: 3}
   beamFirePos: {fileID: 1182762997040591226}
   Beam_intersection: {fileID: 8559749039150121073}
 --- !u!1 &8559749039150121073
@@ -371,15 +371,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1884128571
+  m_SortingLayerID: -628890631
   m_SortingLayer: 3
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 22144197022af82468d2f5d76edcf73f, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 111b29019fa20744583f458f7986502b, type: 3}
   m_Color: {r: 0.9339623, g: 0.24230155, b: 0.24230155, a: 0.105882354}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
