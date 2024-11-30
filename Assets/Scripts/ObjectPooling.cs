@@ -61,24 +61,38 @@ public class ObjectPooling : MonoBehaviour
     private void Update()
     {
         // 빔 쏘는 적
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             SpawnBeamEnemy();
         }
         // 실드
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.W))
         {
             ItemShieldSpawn();
         }
         // 체력 추가
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.E))
         {
             ItemLifeSpawn();
         }
         // 점프력 증가
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.R))
         {
             ItemJumpPowerSpawn();
+        }
+        // 좌우로 움직이는 적
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            SpawnHorizontalEnemy();
+        }
+        // 소행성 생성
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            Planet_GasPooling();
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            AsteroidsPooling();
         }
     }
 
@@ -94,7 +108,7 @@ public class ObjectPooling : MonoBehaviour
     // 일반행성 최종 스폰위치
     private Vector2 randomSpawnPos_Planet;
 
-    public bool ReturnSpawn { set { returnSpawn = value; } }
+    public bool ReturnSpawn {get { return returnSpawn; } set { returnSpawn = value; } }
 
     // 일반행성 풀링 (매개변수 : planet : 어떤 행성을 다시 사용할 것 인가?)
     public void PlanetsPooling(GameObject planet)
@@ -131,7 +145,7 @@ public class ObjectPooling : MonoBehaviour
         // 인덱스 변수가 배열의 끝까지 도달했다면 0으로 초기화
         if (beamEnemyIndex >= beamEnemy.Length) beamEnemyIndex = 0;
 
-        randomSpawnPos_BeamEnemy = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), playerTr.position.y + 7.5f);
+        randomSpawnPos_BeamEnemy = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), playerTr.position.y + 10f);
 
         //Debug.Log(beamEnemyIndex);
 
@@ -140,6 +154,34 @@ public class ObjectPooling : MonoBehaviour
 
         beamEnemyIndex++;
     }
+    #endregion
+
+    #region// 좌우로 움직이는 적 생성
+    // 좌우로 움직이는 적 배열
+    [SerializeField] GameObject[] horizontalEnemy;
+
+    // 좌우로 움직이는 적의 최종 스폰 위치
+    private Vector2 randomSpawnPos_HorizontalEnemy;
+
+    // 좌우로 움직이는 적 차례대로 생성
+    private int horizontalEnemyIndex;
+
+    // 좌우로 움직이는 적 생성
+    private void SpawnHorizontalEnemy()
+    {
+        // 인덱스 변수가 배열의 끝까지 도달했다면 0으로 초기화
+        if (horizontalEnemyIndex >= horizontalEnemy.Length) horizontalEnemyIndex = 0;
+
+        randomSpawnPos_HorizontalEnemy = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), playerTr.position.y + 10f);
+
+        //Debug.Log(horizontalEnemyIndex);
+
+        
+        horizontalEnemy[horizontalEnemyIndex].GetComponent<HorizontalEnemy>().OnSetting(randomSpawnPos_HorizontalEnemy);
+
+        horizontalEnemyIndex++;
+    }
+
     #endregion
 
     #region// 배경 생성
@@ -201,7 +243,7 @@ public class ObjectPooling : MonoBehaviour
         if (item_ShieldIndex >= item_Shield.Length) item_ShieldIndex = 0;
 
         // 랜덤 위치 뽑기
-        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
+        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + 10f);
 
         item_Shield[item_ShieldIndex].transform.position = randomSpawnPos_Item;
 
@@ -215,7 +257,7 @@ public class ObjectPooling : MonoBehaviour
         if (item_LifeIndex >= item_Life.Length) item_LifeIndex = 0;
 
         // 랜덤 위치 뽑기
-        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
+        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + 10f);
 
         item_Life[item_LifeIndex].transform.position = randomSpawnPos_Item;
 
@@ -229,11 +271,69 @@ public class ObjectPooling : MonoBehaviour
         if (item_JumpPowerIndex >= item_JumpPower.Length) item_JumpPowerIndex = 0;
 
         // 랜덤 위치 뽑기
-        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y);
+        randomSpawnPos_Item = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + 10f);
 
         item_JumpPower[item_JumpPowerIndex].transform.position = randomSpawnPos_Item;
 
         item_JumpPowerIndex++;
     }
+    #endregion
+
+    #region// 가스형 행성 생성   
+    // 가스형 행성
+    [SerializeField] GameObject[] planet_Gas;
+
+    // 가스형 행성 인덱스
+    private int planet_GasIndex;
+
+    // 가스형 행성 최종 스폰위치
+    private Vector2 randomSpawnPos_planet_Gas;
+
+    // 가스형 행성 풀링 
+    public void Planet_GasPooling()
+    {
+        
+        // 배열을 끝까지 사용했다면 0으로 할당
+        if(planet_GasIndex >= planet_Gas.Length) planet_GasIndex = 0;
+
+        // 랜덤 위치 뽑기
+        randomSpawnPos_planet_Gas = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + 10f);
+
+        planet_Gas[planet_GasIndex].GetComponent<Planet_Gas>().OnSetting(randomSpawnPos_planet_Gas);
+
+
+        planet_GasIndex++;
+    }
+
+    #endregion
+
+    #region// 소행성 생성
+
+    // 소행성 
+    [SerializeField] GameObject[] asteroids;
+
+    // 소행성 인덱스
+    private int asteroidsIndex;
+
+    // 소행성 최종 스폰위치
+    private Vector2 randomSpawnPos_Asteroids;
+
+    // 소행성 풀링 
+    public void AsteroidsPooling()
+    {
+
+        // 배열을 끝까지 사용했다면 0으로 할당
+        if (asteroidsIndex >= asteroids.Length) asteroidsIndex = 0;
+
+        // 랜덤 위치 뽑기
+        randomSpawnPos_Asteroids = new Vector2(Random.Range(randomSpawnMinX, randomSpawnMaxX), Random.Range(randomSpawnMinY, randomSpawnMaxY) + playerTr.position.y + 10f);
+
+        asteroids[asteroidsIndex].GetComponent<Asteroids>().OnSetting(randomSpawnPos_Asteroids);
+
+
+        asteroidsIndex++;
+    }
+
+
     #endregion
 }

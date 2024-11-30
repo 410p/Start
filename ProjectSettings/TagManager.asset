@@ -11,6 +11,9 @@ TagManager:
   - Planet
   - Item
   - Beam
+  - HorizontalEnemyDestroyZone
+  - Asteroids
+  - Planet_Gas
   layers:
   - Default
   - TransparentFX

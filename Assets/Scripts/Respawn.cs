@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RespawnPlanet : MonoBehaviour
+public class Respawn : MonoBehaviour
 {
     // 풀링 스크립트
     [SerializeField] ObjectPooling objectPooling;
@@ -30,6 +30,11 @@ public class RespawnPlanet : MonoBehaviour
         {
             collision.GetComponent<Item>().Setting();
         }
+        else if (collision.CompareTag("Planet_Gas"))
+        {
+            collision.GetComponent<Planet_Gas>().OffSetting();
+        }
+        
     }
    
 }

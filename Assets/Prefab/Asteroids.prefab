@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2130694688358579389
+--- !u!1 &7270192951416289120
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 494307796701768954}
-  - component: {fileID: 7521163083288697116}
-  - component: {fileID: 5952970745191919439}
-  - component: {fileID: -5675891121292777385}
+  - component: {fileID: 5991422657840385965}
+  - component: {fileID: 1163361390980726294}
+  - component: {fileID: 859813015009230166}
+  - component: {fileID: 919941519064349104}
   m_Layer: 0
-  m_Name: Item_Life
-  m_TagString: Item
+  m_Name: Asteroids
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &494307796701768954
+--- !u!4 &5991422657840385965
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130694688358579389}
+  m_GameObject: {fileID: 7270192951416289120}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.49, y: 2.88, z: 0}
+  m_LocalPosition: {x: 36.08, y: 7.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7521163083288697116
+--- !u!212 &1163361390980726294
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130694688358579389}
+  m_GameObject: {fileID: 7270192951416289120}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,27 +72,27 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -628890631
-  m_SortingLayer: 3
-  m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: d51daeb547799da4eb329308d0576a30, type: 3}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 8f7f25134f01f4b49a263ba6e0a1b97a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &5952970745191919439
-CircleCollider2D:
+--- !u!61 &859813015009230166
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130694688358579389}
+  m_GameObject: {fileID: 7270192951416289120}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -115,21 +115,37 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.003937006, y: -0.074804366}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.35
---- !u!114 &-5675891121292777385
+  m_Size: {x: 1.960629, y: 1.2204596}
+  m_EdgeRadius: 0
+--- !u!114 &919941519064349104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130694688358579389}
+  m_GameObject: {fileID: 7270192951416289120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107f3c57b6159fe489c6c764fcba98f8, type: 3}
+  m_Script: {fileID: 11500000, guid: cc3ec7f9383f6184d8d201d848385255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainSprite: {fileID: 21300000, guid: 8f7f25134f01f4b49a263ba6e0a1b97a, type: 3}
+  vanishSprites:
+  - {fileID: 21300000, guid: 3f95ad970b1a593438777bc797338b43, type: 3}
+  - {fileID: 21300000, guid: 950b7e4fa0c9a9547bf9acba9e298d7d, type: 3}
+  - {fileID: 21300000, guid: d51daeb547799da4eb329308d0576a30, type: 3}
+  - {fileID: 21300000, guid: f52cef0ec6058104db406f06a448df41, type: 3}

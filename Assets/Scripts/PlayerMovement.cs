@@ -18,13 +18,14 @@ public class PlayerMovement : MonoBehaviour
 
     // 오브젝트 풀링 스크립트
     [SerializeField] ObjectPooling objectPooling;
+    public ObjectPooling ObjectPooling => objectPooling;
 
     // 게임매니저 스크립트
     [SerializeField] Gamemanager gamemanager;
     public Gamemanager Gamemanager => gamemanager;
 
     // HpManager 스크립트
-    [SerializeField] HpManager hpManager;    
+    [SerializeField] HpManager hpManager;
 
     // 캐릭터의 총 도착지점
     private Vector2 endPos;
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
         isPossibleToJump = true;
 
-        playerAnimator = GetComponent<Animator>();        
+        playerAnimator = GetComponent<Animator>();
     }
 
 
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
             if (playerRigidbody.velocity.y < 0)
             {
                 // 플레이어의 속도가 20만큼 떨어진다면 죽음 함수 호출
-                if (playerRigidbody.velocity.y <= -20) gamemanager.Die();
+                if (playerRigidbody.velocity.y <= -22) gamemanager.Die();
 
                 // 내려가는 상태라면 행성 스폰 X
                 playerAnimator.SetBool("IsJump", false);
@@ -112,15 +113,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        #region 행성 충돌
+        if (gamemanager.GameOver == true) return;
 
-        //Debug.Log("충돌 감지!");
-        if (collision.CompareTag("Planet") && isPossibleToJump || collision.CompareTag("Planet_Start")) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 그리고 시작행성일 때 시작
-        {
+        #region 일반 행성 충돌, 가스형 행성 충돌
+
+        if (collision.CompareTag("Planet") && isPossibleToJump || collision.CompareTag("Planet_Start") || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false)) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성일 때,
+        {// 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과
+
+            #region// 가스형 행성 충돌
+
+            // 태그가 소행성이고, 한번도 안 밟았다면, 그리고 플레이어가 내려갈 때만
+            if (collision.CompareTag("Planet_Gas") && objectPooling.ReturnSpawn == true)
+            {                
+                // 사라지는 메서드 Vanish호출
+                StartCoroutine(collision.GetComponent<Planet_Gas>().Vanish());
+            }
+
+            #endregion
+
             //Debug.Log("조건문 실행!");
             playerRigidbody.velocity = new Vector2(0, 0.8f); //y속도 초기화
             playerRigidbody.AddForce(new Vector2(0, speed)); //y방향으로 speed만큼 힘 주기
-            isPossibleToJump = false; //점프한 직후 충돌 불가로 설정
+            isPossibleToJump = false; //점프한 직후 충돌 불가로 설정            
         }
         #endregion
 
@@ -148,9 +162,24 @@ public class PlayerMovement : MonoBehaviour
             else if (collision.name.Contains("Item_Shield"))
             {
                 //실드
-            }            
+            }
         }
         #endregion
+
+        #region// 빔 쏘는 적의 빔 충돌     
+
+        // 태그가 빔이고 첫번 째 공격이라면
+        if (collision.CompareTag("Beam") && collision.GetComponentInParent<BeamEnemy>().FirstAttack == false)
+        {
+            // 할당
+            collision.GetComponentInParent<BeamEnemy>().FirstAttack = true;
+
+            // 호출
+            hpManager.MinusHP();
+        }
+
+        #endregion
+
     }
 
 
