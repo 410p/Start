@@ -37,7 +37,7 @@ public class Asteroids : MonoBehaviour
     }
 
     // 오브젝트 사용 완료 후 세팅
-    private void OffSetting()
+    public void OffSetting()
     {
         transform.position = standbyPos;
 

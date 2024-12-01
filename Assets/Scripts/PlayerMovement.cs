@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     // HpManager 스크립트
     [SerializeField] HpManager hpManager;
+    public HpManager HpManager => hpManager;
 
     // 캐릭터의 총 도착지점
     private Vector2 endPos;
@@ -172,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("Beam") && collision.GetComponentInParent<BeamEnemy>().FirstAttack == false)
         {
             // 할당
-            collision.GetComponentInParent<BeamEnemy>().FirstAttack = true;
+            collision.GetComponentInParent<BeamEnemy>().FirstAttack = true;            
 
             // 호출
             hpManager.MinusHP();

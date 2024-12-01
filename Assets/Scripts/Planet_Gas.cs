@@ -6,7 +6,7 @@ public class Planet_Gas : MonoBehaviour
 {
 
     // 사라지는 애니메이션 스프라이트
-    [SerializeField] Sprite[] Planet_GasSprites;
+    [SerializeField] Sprite[] vanishSprites;
     // 가스형 행성 스프라이트 인덱스
     private int planet_GasIndex;
 
@@ -34,7 +34,7 @@ public class Planet_Gas : MonoBehaviour
 
         standbyPos = new Vector2 (32.33f, 6.84f);
 
-        vanishDelay = new WaitForSeconds(0.5f);
+        vanishDelay = new WaitForSeconds(0.1f);
 
         
     }
@@ -71,7 +71,7 @@ public class Planet_Gas : MonoBehaviour
         {
 
             // 애니메이션이 끝났다면
-            if (planet_GasIndex >= Planet_GasSprites.Length)
+            if (planet_GasIndex >= vanishSprites.Length)
             {
                 OffSetting();
 
@@ -84,7 +84,7 @@ public class Planet_Gas : MonoBehaviour
             yield return vanishDelay;
 
             // 소행성 스프라이트 변경
-            planet_GasSpriteRenderer.sprite = Planet_GasSprites[planet_GasIndex];
+            planet_GasSpriteRenderer.sprite = vanishSprites[planet_GasIndex];
 
             // 증가
             planet_GasIndex++;

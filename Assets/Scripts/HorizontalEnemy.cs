@@ -28,14 +28,22 @@ public class HorizontalEnemy : MonoBehaviour
     // 메인 스프라이트
     [SerializeField] Sprite mainSprite;
 
+    // HpManager 스크립트
+    private HpManager hpManager;
+
+    // 좌우로 움직이는 적의 콜라이더
+    private CircleCollider2D horizontalEnemyCol;
+
     private void Start()
     {
         // 할당 
-        explosionTime = new WaitForSeconds(0.32f);
+        explosionTime = new WaitForSeconds(0.1f);
 
         standbyPos = new Vector2(34.23f, 0.86f);
 
         horizontalEnemyRb = GetComponent<Rigidbody2D>();
+
+        horizontalEnemyCol = gameObject.GetComponent<CircleCollider2D>();
     }
 
     // 사용할 때 필요한 세팅
@@ -55,10 +63,13 @@ public class HorizontalEnemy : MonoBehaviour
 
     // 사용 끝난 세팅
     private void OffSetting()
-    {       
+    {
 
         // 움직이지 않도록 0으로 설정
         movementDirection = 0;
+
+        // 충돌 감지 켜기
+        horizontalEnemyCol.enabled = true;
 
         // 대기위치로 이동
         transform.position = standbyPos;
@@ -79,8 +90,21 @@ public class HorizontalEnemy : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
+            // hpManager 할당이 안 됐을 때는 플레이어의 PlayerMovement에서 hpManager 프로퍼티를 사용해 할당
+            if (hpManager == null) hpManager = collision.GetComponent<PlayerMovement>().HpManager; 
+
+            // 게임이 종료 됐다면 리턴
+            if (collision.GetComponent<PlayerMovement>().Gamemanager.GameOver == true) return;
+
+            // 체력 감소
+            hpManager.MinusHP();
+
+            // 충돌 감지 끄기
+            horizontalEnemyCol.enabled = false;
+
             // 폭발 코루틴 호출
             StartCoroutine(Explosion());
+
         }
         else if (collision.CompareTag("Left Collider"))
         {
@@ -101,7 +125,7 @@ public class HorizontalEnemy : MonoBehaviour
     // 폭발
     private IEnumerator Explosion()
     {
-        Debug.Log("폭발");
+        
 
         while (true)
         {
@@ -120,7 +144,7 @@ public class HorizontalEnemy : MonoBehaviour
             explosionsIndex++;
 
             yield return explosionTime;
-            
+
         }
     }
 }

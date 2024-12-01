@@ -34,6 +34,10 @@ public class Respawn : MonoBehaviour
         {
             collision.GetComponent<Planet_Gas>().OffSetting();
         }
+        else if (collision.CompareTag("Asteroids"))
+        {
+            collision.GetComponent<Asteroids>().OffSetting();
+        }
         
     }
    

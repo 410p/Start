@@ -1424,6 +1424,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet_Gas (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3162761978620110359, guid: 1c7fc529835e21044923441bdd969c21, type: 3}
+      propertyPath: vanishSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3162761978620110359, guid: 1c7fc529835e21044923441bdd969c21, type: 3}
+      propertyPath: vanishSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 64c1d9a26d64adb48a49051c473dc72e, type: 3}
+    - target: {fileID: 3162761978620110359, guid: 1c7fc529835e21044923441bdd969c21, type: 3}
+      propertyPath: vanishSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: a896da8fb33c62e479bfe86fcf4941a3, type: 3}
+    - target: {fileID: 3162761978620110359, guid: 1c7fc529835e21044923441bdd969c21, type: 3}
+      propertyPath: vanishSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0528a21fe6d64c54eb782aaebf97fa44, type: 3}
+    - target: {fileID: 3162761978620110359, guid: 1c7fc529835e21044923441bdd969c21, type: 3}
+      propertyPath: vanishSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: ec467be7ef997c1428a121a6821bdb85, type: 3}
     - target: {fileID: 3472397773553068304, guid: 1c7fc529835e21044923441bdd969c21, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.32
