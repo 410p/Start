@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float jumpBoostCooldown;
 
+    private bool isShield;
+
     private void Awake()
     {
         // 할당
@@ -52,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
 
         isPossibleToJump = true;
+        isShield = false;
 
         playerAnimator = GetComponent<Animator>();
     }
@@ -162,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (collision.name.Contains("Item_Shield"))
             {
-                //실드
+                isShield = true;
             }
         }
         #endregion
@@ -176,7 +179,14 @@ public class PlayerMovement : MonoBehaviour
             collision.GetComponentInParent<BeamEnemy>().FirstAttack = true;            
 
             // 호출
-            hpManager.MinusHP();
+            if(isShield)
+            {
+                isShield = false;
+            }
+            else
+            {
+                hpManager.MinusHP();
+            }
         }
 
         #endregion
