@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5991422657840385965}
   - component: {fileID: 1163361390980726294}
-  - component: {fileID: 859813015009230166}
   - component: {fileID: 919941519064349104}
+  - component: {fileID: -161259885112977684}
   m_Layer: 0
   m_Name: Asteroids
   m_TagString: Asteroids
@@ -86,7 +86,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &859813015009230166
+--- !u!114 &919941519064349104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270192951416289120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3ec7f9383f6184d8d201d848385255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainSprite: {fileID: 21300000, guid: 8f7f25134f01f4b49a263ba6e0a1b97a, type: 3}
+  vanishSprites:
+  - {fileID: 21300000, guid: 64c1d9a26d64adb48a49051c473dc72e, type: 3}
+  - {fileID: 21300000, guid: a896da8fb33c62e479bfe86fcf4941a3, type: 3}
+  - {fileID: 21300000, guid: 0528a21fe6d64c54eb782aaebf97fa44, type: 3}
+  - {fileID: 21300000, guid: ec467be7ef997c1428a121a6821bdb85, type: 3}
+--- !u!61 &-161259885112977684
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,10 +133,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.003937006, y: -0.074804366}
+  m_Offset: {x: 0.047943115, y: -0.11643362}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -129,23 +147,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.960629, y: 1.2204596}
+  m_Size: {x: 1.6301575, y: 0.82197}
   m_EdgeRadius: 0
---- !u!114 &919941519064349104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7270192951416289120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc3ec7f9383f6184d8d201d848385255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainSprite: {fileID: 21300000, guid: 8f7f25134f01f4b49a263ba6e0a1b97a, type: 3}
-  vanishSprites:
-  - {fileID: 21300000, guid: 64c1d9a26d64adb48a49051c473dc72e, type: 3}
-  - {fileID: 21300000, guid: a896da8fb33c62e479bfe86fcf4941a3, type: 3}
-  - {fileID: 21300000, guid: 0528a21fe6d64c54eb782aaebf97fa44, type: 3}
-  - {fileID: 21300000, guid: ec467be7ef997c1428a121a6821bdb85, type: 3}

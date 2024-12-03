@@ -16,10 +16,6 @@ public class PlayerMovement : MonoBehaviour
     //현재 점프가 가능한지
     private bool isPossibleToJump;
 
-    // 오브젝트 풀링 스크립트
-    [SerializeField] ObjectPooling objectPooling;
-    public ObjectPooling ObjectPooling => objectPooling;
-
     // 게임매니저 스크립트
     [SerializeField] Gamemanager gamemanager;
     public Gamemanager Gamemanager => gamemanager;
@@ -46,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBoostCooldown;
 
     private bool isShield;
+    public bool IsShield { get { return isShield; } set { isShield = value; } }
 
     private void Awake()
     {
@@ -74,12 +71,12 @@ public class PlayerMovement : MonoBehaviour
             if (playerRigidbody.velocity.y < 0)
             {
                 // 플레이어의 속도가 20만큼 떨어진다면 죽음 함수 호출
-                if (playerRigidbody.velocity.y <= -22) gamemanager.Die();
+                if (playerRigidbody.velocity.y <= -22) gamemanager.Die(false);
 
                 // 내려가는 상태라면 행성 스폰 X
                 playerAnimator.SetBool("IsJump", false);
 
-                objectPooling.ReturnSpawn = true;
+                gamemanager.Fall = true;
 
                 isPossibleToJump = true;
 
@@ -89,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
                 // 올라가는 상태라면 행성 스폰 가능
                 playerAnimator.SetBool("IsJump", true);
 
-                objectPooling.ReturnSpawn = false;
+                gamemanager.Fall = false;
 
             }
 
@@ -121,14 +118,16 @@ public class PlayerMovement : MonoBehaviour
 
         #region 일반 행성 충돌, 가스형 행성 충돌
 
-        if (collision.CompareTag("Planet") && isPossibleToJump || collision.CompareTag("Planet_Start") || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false)) //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성일 때,
-        {// 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과
+        if (collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false))
+        //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성이고 시작버튼을 눌렀을 때,
+        // 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과
+        {
 
             #region// 가스형 행성 충돌
 
             // 태그가 소행성이고, 한번도 안 밟았다면, 그리고 플레이어가 내려갈 때만
-            if (collision.CompareTag("Planet_Gas") && objectPooling.ReturnSpawn == true)
-            {                
+            if (collision.CompareTag("Planet_Gas") && gamemanager.Fall == true)
+            {
                 // 사라지는 메서드 Vanish호출
                 StartCoroutine(collision.GetComponent<Planet_Gas>().Vanish());
             }
@@ -145,27 +144,36 @@ public class PlayerMovement : MonoBehaviour
         #region 아이템 충돌
         if (collision.CompareTag("Item"))
         {
-            // 대기위치로 이동
-            collision.GetComponent<Item>().Setting();
 
             //점프 아이템
             if (collision.name.Contains("Item_JumpPower"))
             {
+
                 if (!isJumpBoost)
                 {
                     speed += 200f;
                     isJumpBoost = true;
                 }
                 prevTime = Time.time;
+
+                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
             }
             //체력 아이템
             else if (collision.name.Contains("Item_Life"))
             {
+
                 hpManager.AddHp();
+
+                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
             }
             else if (collision.name.Contains("Item_Shield"))
             {
+                //실드
                 isShield = true;
+
+                //실드
+                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+
             }
         }
         #endregion
@@ -176,10 +184,10 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("Beam") && collision.GetComponentInParent<BeamEnemy>().FirstAttack == false)
         {
             // 할당
-            collision.GetComponentInParent<BeamEnemy>().FirstAttack = true;            
+            collision.GetComponentInParent<BeamEnemy>().FirstAttack = true;
 
             // 호출
-            if(isShield)
+            if (isShield)
             {
                 isShield = false;
             }
@@ -187,6 +195,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 hpManager.MinusHP();
             }
+        }
+
+        #endregion
+
+        #region// 소행성 충돌
+
+        // 내려갈 때만
+        if (collision.CompareTag("Asteroids") && gamemanager.Fall == true)
+        {
+            // 사라지는 애니메이션 호출
+            StartCoroutine(collision.GetComponent<Asteroids>().Vanish());
         }
 
         #endregion

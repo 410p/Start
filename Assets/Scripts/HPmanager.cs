@@ -55,7 +55,7 @@ public class HpManager : MonoBehaviour
         // 플레이어의 체력이 0보다 작거나 같다면 게임매니저의 죽음 함수 호출
         if(hpPrefabManager.Count <= 0)
         {
-            gamemanager.Die();
+            gamemanager.Die(true);
         }
 
     }

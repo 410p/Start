@@ -9,6 +9,8 @@ public class StartPlanet : MonoBehaviour
 
     // 시작할 때의 점프속도
     private float firstJumpForce;
+
+    [SerializeField] Gamemanager gamemanager;
     
     private void Start()
     {
@@ -20,7 +22,7 @@ public class StartPlanet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 충돌한 물체의 태그가 플레이어라면
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && gamemanager.GameStart == true)
         {
             // 플레이어 Rigidbody2D가져오기
             playerRb = collision.gameObject.GetComponent<PlayerMovement>().PlayerRigidbody;

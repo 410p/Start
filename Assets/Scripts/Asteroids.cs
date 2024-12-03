@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Asteroids : MonoBehaviour
-{
-    // 대기위치
-    private Vector2 standbyPos;
-
+{  
     // 메인 스프라이트
     [SerializeField] Sprite mainSprite;
 
@@ -19,33 +16,28 @@ public class Asteroids : MonoBehaviour
     // 사라지는 스프라이트들 가져오는 인덱스
     private int vanishSpritesIndex;
 
-    private void Start()
+    // 오브젝트 풀링 스크립트
+    private ObjectPooling objectPooling;
+
+    private void Awake()
     {
         // 할당
 
-        standbyPos = new Vector2(36.08f, 7.39f);
+        objectPooling = GetComponentInParent<ObjectPooling>();
 
         animationDelay = new WaitForSeconds(0.1f);
     }
 
-    // 오브젝트 사용 준비 세팅
-    public void OnSetting(Vector2 spawnPos)
+    private void OnEnable()
     {
-        transform.position = spawnPos; 
-
-
-    }
-
-    // 오브젝트 사용 완료 후 세팅
-    public void OffSetting()
-    {
-        transform.position = standbyPos;
+        transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
+            (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y));
 
         gameObject.GetComponent<SpriteRenderer>().sprite = mainSprite;
 
         vanishSpritesIndex = 0;
-
     }
+    
 
     // 사라지다
     public IEnumerator Vanish()
@@ -54,10 +46,11 @@ public class Asteroids : MonoBehaviour
         {
             if (vanishSpritesIndex >= vanishSprites.Length)
             {
-                OffSetting();
+                objectPooling.Return(gameObject);
 
                 yield break;
             }
+
             // 사라지는 스프라이트로 변경
                 gameObject.GetComponent<SpriteRenderer>().sprite = vanishSprites[vanishSpritesIndex];
 
@@ -68,12 +61,5 @@ public class Asteroids : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // 만약 충돌체의 태그가 Player고 떨어지는 중 이라면
-        if (collision.CompareTag("Player") && collision.GetComponent<PlayerMovement>().ObjectPooling.ReturnSpawn == true)
-        {
-            StartCoroutine(Vanish());
-        }
-    }
+    
 }

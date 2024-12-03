@@ -13,9 +13,6 @@ public class HorizontalEnemy : MonoBehaviour
     // 폭발 이미지 변경 시간
     private WaitForSeconds explosionTime;
 
-    // 대기위치
-    private Vector2 standbyPos;
-
     // 좌우이동 적의 Rigidbody2D
     private Rigidbody2D horizontalEnemyRb;
 
@@ -34,55 +31,61 @@ public class HorizontalEnemy : MonoBehaviour
     // 좌우로 움직이는 적의 콜라이더
     private CircleCollider2D horizontalEnemyCol;
 
-    private void Start()
+    // 오브젝트 풀링 스크립트
+    private ObjectPooling objectPooling;
+
+    // playerMovement 스크립트
+    private PlayerMovement playerMovement;
+
+    private Gamemanager gamemanager;
+    private void Awake()
     {
         // 할당 
-        explosionTime = new WaitForSeconds(0.1f);
-
-        standbyPos = new Vector2(34.23f, 0.86f);
+        explosionTime = new WaitForSeconds(0.1f);       
 
         horizontalEnemyRb = GetComponent<Rigidbody2D>();
 
         horizontalEnemyCol = gameObject.GetComponent<CircleCollider2D>();
-    }
 
-    // 사용할 때 필요한 세팅
-    public void OnSetting(Vector2 spawnPos)
-    {
+        // 부모에게서 가져옴
+        objectPooling = GetComponentInParent<ObjectPooling>();
 
-        // 위치 설정
-        transform.position = spawnPos;
+        // 플레이어 무브먼트 스크립트 찾아서 할당 > 1개밖에 없음
+        playerMovement = FindObjectOfType<PlayerMovement>();
 
-        // 속도
-        movementSpeed = 7;
+        // 부모의 부모에게서 게임매니저 할당
+        gamemanager = GetComponentInParent<Gamemanager>().GetComponentInParent<Gamemanager>();
 
         // 왼쪽 설정
         movementDirection = -1;
-
     }
 
-    // 사용 끝난 세팅
-    private void OffSetting()
+    private void OnEnable()
     {
 
-        // 움직이지 않도록 0으로 설정
-        movementDirection = 0;
+        // 위치 정하기
+        transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
+            (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y + 10));
 
         // 충돌 감지 켜기
         horizontalEnemyCol.enabled = true;
 
-        // 대기위치로 이동
-        transform.position = standbyPos;
+        // 속도
+        movementSpeed = 7;
 
         explosionsIndex = 0;
 
         gameObject.GetComponent<SpriteRenderer>().sprite = mainSprite;
-    }
+
+    }     
 
     private void Update()
     {
+        if (gamemanager.GameOver) return;
+
         // 오르쪽 설정, 속도 설정, 방향설정
         horizontalEnemyRb.velocity = transform.right * movementSpeed * movementDirection;
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -97,7 +100,14 @@ public class HorizontalEnemy : MonoBehaviour
             if (collision.GetComponent<PlayerMovement>().Gamemanager.GameOver == true) return;
 
             // 체력 감소
-            hpManager.MinusHP();
+            if (playerMovement.IsShield)
+            {
+                playerMovement.IsShield = false;
+            }
+            else
+            {
+                hpManager.MinusHP();
+            }
 
             // 충돌 감지 끄기
             horizontalEnemyCol.enabled = false;
@@ -118,21 +128,22 @@ public class HorizontalEnemy : MonoBehaviour
         }
         else if (collision.CompareTag("HorizontalEnemyDestroyZone"))
         {
-            OffSetting();
+            objectPooling.Return(gameObject);
         }
     }
 
     // 폭발
     private IEnumerator Explosion()
     {
-        
+        // 속도
+        movementSpeed = 0;
 
         while (true)
         {
             // 폭발 스프라이트를 끝까지 사용했다면
             if (explosionsIndex >= explosions.Length)
             {
-                OffSetting();
+                objectPooling.Return(gameObject);
 
                 yield break;
             }
