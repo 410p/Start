@@ -69,7 +69,7 @@ public class ObjectPooling : MonoBehaviour
 
     // 오브젝트 풀에서 꺼낼때 이벤트 처리 
     private void GetOut_Event(GameObject poolObject)
-    {       
+    {              
         poolObject.SetActive(true);
     }
 

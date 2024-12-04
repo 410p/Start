@@ -35,14 +35,32 @@ public class PlayerMovement : MonoBehaviour
 
     //점프 효과를 받고 있는지
     private bool isJumpBoost;
+    private bool isBig;
+    private bool isSmall;
+
     //마지막 시간
-    private float prevTime;
+    private float jumpPrevTime;
+    private float bigPrevTime;
+    private float smallPrevTime;
 
     [SerializeField]
     private float jumpBoostCooldown;
+    [SerializeField]
+    private float bigCooldown;
+    [SerializeField]
+    private float smallCooldown;
 
     private bool isShield;
     public bool IsShield { get { return isShield; } set { isShield = value; } }
+
+
+
+    // ObjectPooling  아이템 스크립트
+    private ObjectPooling objectPooling_Item;  
+
+    [SerializeField]
+    private float size;
+
 
     private void Awake()
     {
@@ -52,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
         isPossibleToJump = true;
         isShield = false;
+        isBig = false;
+        isSmall = false;
 
         playerAnimator = GetComponent<Animator>();
     }
@@ -107,6 +127,24 @@ public class PlayerMovement : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
 
             #endregion
+
+            #region 아이템 시간 구현
+            if (Time.time - jumpPrevTime >= jumpBoostCooldown && isJumpBoost)
+            {
+                speed -= 200f;
+                isJumpBoost = false;
+            }
+            if (Time.time - bigPrevTime >= bigCooldown && isBig)
+            {
+                transform.localScale -= new Vector3(size, size);
+                isBig = false;
+            }
+            if (Time.time - smallPrevTime >= smallCooldown && isSmall)
+            {
+                transform.localScale += new Vector3(size, size);
+                isSmall = false;
+            }
+            #endregion
         }
     }
     Collider2D c2;
@@ -141,40 +179,103 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
+        // 한번만 스크립트 가져오기
+        if (objectPooling_Item == null) { objectPooling_Item = collision.GetComponentInParent<ObjectPooling>(); Debug.Log("없음"); }
+
         #region 아이템 충돌
         if (collision.CompareTag("Item"))
         {
+            
 
             //점프 아이템
             if (collision.name.Contains("Item_JumpPower"))
             {
+               
 
                 if (!isJumpBoost)
                 {
                     speed += 200f;
                     isJumpBoost = true;
                 }
-                prevTime = Time.time;
+                jumpPrevTime = Time.time;
+                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
 
+                jumpPrevTime = Time.time;
+
+                objectPooling_Item.Return(collision.gameObject);
+            }
+            else if (collision.name.Contains("Mushroom_Big"))
+            {
+                Debug.Log("감지");
+                if (!isBig)
+                {
+                    if (isSmall)
+                    {
+                        transform.localScale += new Vector3(size, size);
+                        isSmall = false;
+                    }
+                    transform.localScale += new Vector3(size, size);
+                    isBig = true;
+                }
+                bigPrevTime = Time.time;
                 collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
             }
+            else if (collision.name.Contains("Mushroom_Small"))
+            {
+                if (!isSmall)
+                {
+                    if (isBig)
+                    {
+                        transform.localScale -= new Vector3(size, size);
+                        isBig = false;
+                    }
+                    transform.localScale -= new Vector3(size, size);
+                    isSmall = true;
+                }
+                smallPrevTime = Time.time;
+                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+            }
+
             //체력 아이템
             else if (collision.name.Contains("Item_Life"))
             {
 
                 hpManager.AddHp();
 
-                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+                objectPooling_Item.Return(collision.gameObject);
             }
+            //실드 아이템
             else if (collision.name.Contains("Item_Shield"))
             {
                 //실드
                 isShield = true;
 
                 //실드
-                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+                objectPooling_Item.Return(collision.gameObject);
 
             }
+            //거대화 아이템
+            else if (collision.name.Contains("Item_??"))
+            {
+                if (!isBig)
+                {
+                    isBig = true;
+                    transform.localScale += new Vector3(size, size);
+                }
+                bigPrevTime = Time.time;
+            }
+            //소형화 아이템
+            else if (collision.name.Contains("Item_!!"))
+            {
+                if (!isSmall)
+                {
+                    isSmall = true;
+                    transform.localScale -= new Vector3(size, size);
+                }
+                smallPrevTime = Time.time;
+            }
+
+            
         }
         #endregion
 
@@ -211,6 +312,4 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
     }
-
-
 }
