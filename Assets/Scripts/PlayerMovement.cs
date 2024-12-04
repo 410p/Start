@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpBoost;
     private bool isBig;
     private bool isSmall;
+
     //마지막 시간
     private float jumpPrevTime;
     private float bigPrevTime;
@@ -121,8 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
             #endregion
 
-            #region 아이템 지속 시간
-
+            #region 아이템 시간 구현
             if (Time.time - jumpPrevTime >= jumpBoostCooldown && isJumpBoost)
             {
                 speed -= 200f;
@@ -188,6 +188,10 @@ public class PlayerMovement : MonoBehaviour
                 }
                 jumpPrevTime = Time.time;
                 collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+
+                jumpPrevTime = Time.time;
+
+                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
             }
             else if (collision.name.Contains("Mushroom_Big"))
             {
@@ -229,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
 
                 collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
             }
+            //실드 아이템
             else if (collision.name.Contains("Item_Shield"))
             {
                 //실드
@@ -236,6 +241,27 @@ public class PlayerMovement : MonoBehaviour
 
                 //실드
                 collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+
+            }
+            //거대화 아이템
+            else if (collision.name.Contains("Item_??"))
+            {
+                if (!isBig)
+                {
+                    isBig = true;
+                    transform.localScale += new Vector3(size, size);
+                }
+                bigPrevTime = Time.time;
+            }
+            //소형화 아이템
+            else if (collision.name.Contains("Item_!!"))
+            {
+                if (!isSmall)
+                {
+                    isSmall = true;
+                    transform.localScale -= new Vector3(size, size);
+                }
+                smallPrevTime = Time.time;
             }
 
             
