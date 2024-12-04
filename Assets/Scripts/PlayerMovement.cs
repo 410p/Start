@@ -44,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isShield;
     public bool IsShield { get { return isShield; } set { isShield = value; } }
 
+
+    // ObjectPooling  아이템 스크립트
+    private ObjectPooling objectPooling_Item;  
+
     private void Awake()
     {
         // 할당
@@ -141,13 +145,18 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
+        // 한번만 스크립트 가져오기
+        if (objectPooling_Item == null) { objectPooling_Item = collision.GetComponentInParent<ObjectPooling>(); Debug.Log("없음"); }
+
         #region 아이템 충돌
         if (collision.CompareTag("Item"))
         {
+            
 
             //점프 아이템
             if (collision.name.Contains("Item_JumpPower"))
             {
+               
 
                 if (!isJumpBoost)
                 {
@@ -156,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 prevTime = Time.time;
 
-                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+                objectPooling_Item.Return(collision.gameObject);
             }
             //체력 아이템
             else if (collision.name.Contains("Item_Life"))
@@ -164,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
                 hpManager.AddHp();
 
-                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+                objectPooling_Item.Return(collision.gameObject);
             }
             else if (collision.name.Contains("Item_Shield"))
             {
@@ -172,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
                 isShield = true;
 
                 //실드
-                collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
+                objectPooling_Item.Return(collision.gameObject);
 
             }
         }

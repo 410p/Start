@@ -71,7 +71,7 @@ public class HorizontalEnemy : MonoBehaviour
         horizontalEnemyCol.enabled = true;
 
         // ¼Óµµ
-        movementSpeed = 7;
+        movementSpeed = 6;
 
         explosionsIndex = 0;
 
