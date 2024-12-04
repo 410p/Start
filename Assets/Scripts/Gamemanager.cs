@@ -19,12 +19,27 @@ public class Gamemanager : MonoBehaviour
     private bool gameStart;
     public bool GameStart => gameStart;
 
+    // 죽을 때 위로 올라가는 속도(힘)
+    private float dieForce;
+
+    // 플레이어 애니메이터
+    [SerializeField] Animator playerAnimator;
+
+    // 떨어지다 > 플레이어가 떨어지는지?
+    private bool fall;
+    public bool Fall { get { return fall; } set { fall = value; } }
+
+    // 일반 행성 풀링 스크립트
+    private ObjectPooling objectPooling_Planet;
+
+
     private void Awake()
     {
         // 할당 
         gameOver = false;
 
-        gameStart = false;      
+        gameStart = false;
+
     }
 
     private void Start()
@@ -32,8 +47,17 @@ public class Gamemanager : MonoBehaviour
         // Start에서 할당한 이유 > playerMovement.PlayerRigidbody를 Awake에서 가져오기 때문에 Awake에서 할당하면 NullReference오류뜸
         playerRb = playerMovement.PlayerRigidbody;
 
+        objectPooling_Planet = GameObject.FindWithTag("PlanetParent").GetComponent<ObjectPooling>();
+
         // 처음 중력을 0으로 설정
         playerRb.gravityScale = 0;
+
+        dieForce = 3f;
+
+        for (int i = 0; i < 30; i++)
+        {
+            objectPooling_Planet.GetOut();
+        }
     }
 
     private void Update()
@@ -47,21 +71,33 @@ public class Gamemanager : MonoBehaviour
             gameStart = true;
 
             // 중력을 원래대로 돌림
-            playerRb.gravityScale = 0.3f;           
-            
-        }       
+            playerRb.gravityScale = 0.3f;
+
+        }
 
     }
 
-    // 죽음 함수
-    public void Die()
+    // 죽음 함수 (파라미터 : 적 한테 죽음?)
+    public void Die(bool deathByEnemy)
     {
         gameOver = true;
 
+        // 적한테 죽었다면
+        if (deathByEnemy)
+        {
+            playerAnimator.SetBool("IsDie", true);
+        }
+
         // 플레이어 속도, 중력의 크기 변경
         playerRb.velocity = Vector2.zero;
-        playerRb.gravityScale = 0.08f;
+        playerRb.velocity = new Vector2(0, dieForce);
+        playerRb.gravityScale = 0.4f;
+
+        // 6초 후 삭제`
+        Destroy(playerRb.gameObject, 4f);
 
         Debug.Log("사망");
+
+
     }
 }

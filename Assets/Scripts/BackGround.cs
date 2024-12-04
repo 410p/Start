@@ -16,15 +16,16 @@ public class BackGround : MonoBehaviour
     private Transform playerTr;
 
     // 오브젝트 풀링 스크립트
-    private ObjectPooling objectPooling;
+    private ObjectPooling objectPooling;  
+
     private void Start()
     {
         // 할당
 
 
         // ObjectPooling 스크립트를 가져오기 위해 아래같은 코드를 짬
-        objectPooling = GetComponentInParent<ObjectPooling>().GetComponentInParent<ObjectPooling>().GetComponentInParent<ObjectPooling>();
-
+        objectPooling = GetComponentInParent<ObjectPooling>();
+        
         // 플레이어의 트랜스폼이 objectPooling에 있어서 프로퍼티를 사용해 가져옴
         playerTr = objectPooling.PlayerTr;
 
@@ -36,7 +37,8 @@ public class BackGround : MonoBehaviour
 
 
     private void Update()
-    {
+    {               
+        // 배경의 위치가 플레이어보다 -6.87f더 아래에 있을 때 사용중이고 게임오버가 아닐 때만 호출
         if (transform.position.y < playerTr.position.y + -6.87f && inUse)
         {
             Setting();
@@ -50,6 +52,6 @@ public class BackGround : MonoBehaviour
 
         inUse = false;
 
-        objectPooling.RandomBGSpawn();
+       
     }
 }

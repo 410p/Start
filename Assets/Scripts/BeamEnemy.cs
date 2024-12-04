@@ -3,9 +3,7 @@ using UnityEngine;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class BeamEnemy : MonoBehaviour
-{
-    // 대기위치
-    private Vector2 StandbyPos;
+{   
 
     // 적이 발사할 빔
     [SerializeField] Sprite[] beams;
@@ -41,9 +39,14 @@ public class BeamEnemy : MonoBehaviour
     // 빔 사이즈 0 :빔의 크기 작은거 > 끝 : 큰거
     private float[] beamSize = { 0.06395339f, 0.1873069f, 0.3178431f, 0.4399575f, 0.587337f, 0.6883971f, 0.8231441f, 0.9452585f };
 
-    private void Start()
+    // 오브젝트 풀링 스크립트
+    private ObjectPooling objectPooling;
+
+    private void Awake()
     {
         // 할당          
+
+        objectPooling = GetComponentInParent<ObjectPooling>();
 
         beamCollider = beamFire.GetComponent<BoxCollider2D>();
 
@@ -59,39 +62,25 @@ public class BeamEnemy : MonoBehaviour
 
         beamDestroyDelay = new WaitForSeconds(0.04f);
 
-        // 대기 위치 정의
-        StandbyPos = new Vector2(32.45f, 0.83f);
+    } 
+   
 
-    }
-
-    // 오브젝트 능력치 할당
-    private void OffSetting()
+    private void OnEnable()
     {
-        // 코루틴 중지
-        StopCoroutine(DestroyBeam());
-        StopCoroutine(FireBeam());
 
-        // 대기위치로 이동            
-        transform.position = StandbyPos;
-
+        // 위치 정하기
+        transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
+            (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y + 10)); ;
         // 컴포넌트 비활성화
         beamCollider.enabled = false;
 
+
         // 공격 가능 할당
         firstAttack = false;
-    }
-
-    // 오브젝트 위치 설정
-    public void OnSetting(Vector2 pos)
-    {
-        // 해당 객체를 매개변수 pos에 위치로 이동
-        gameObject.transform.position = pos;
 
         // 호출
         StartCoroutine(FireBeam());
     }
-
-
 
     // 빔을 발사하는 함수
     private IEnumerator FireBeam()
@@ -153,7 +142,12 @@ public class BeamEnemy : MonoBehaviour
             yield return beamDestroyDelay;
         }
 
-        OffSetting();
+
+        objectPooling.Return(gameObject);
+
+        // 코루틴 중지
+        StopCoroutine(DestroyBeam());
+        StopCoroutine(FireBeam());
 
     }
 
