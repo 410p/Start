@@ -928,6 +928,68 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1001 &774308943
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4733852024527238123, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421233707851089189, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526795075999243551, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
+      propertyPath: m_Name
+      value: Mushroom_Big
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b004cdae7eca22438dc2d1ad933fca0, type: 3}
 --- !u!1 &886596359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1398,10 @@ MonoBehaviour:
   speed: 650
   gamemanager: {fileID: 720832865}
   hpManager: {fileID: 720832866}
-  jumpBoostCooldown: 0
+  jumpBoostCooldown: 5
+  bigCooldown: 10
+  smallCooldown: 10
+  size: 0.5
 --- !u!70 &1306060751
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1639,3 +1704,4 @@ SceneRoots:
   - {fileID: 178841295}
   - {fileID: 720832863}
   - {fileID: 4832819412749328122}
+  - {fileID: 774308943}
