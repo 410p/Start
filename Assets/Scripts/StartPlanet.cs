@@ -15,7 +15,7 @@ public class StartPlanet : MonoBehaviour
     private void Start()
     {
         // วาด็
-        firstJumpForce = 1500f;
+        firstJumpForce = 2000;
     }
 
 

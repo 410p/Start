@@ -15,6 +15,10 @@ TagManager:
   - Asteroids
   - Planet_Gas
   - PlanetParent
+  - BulletDestroyZone
+  - Bullet
+  - Gamemanager
+  - objectPooling_bullet
   layers:
   - Default
   - TransparentFX

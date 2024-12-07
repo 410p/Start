@@ -31,9 +31,7 @@ public class Planet_Gas : MonoBehaviour
     private void Awake()
     {
         // ÀÚ±â ÄÄÆ÷³ÍÆ® °¡Á®¿È
-        planet_GasSpriteRenderer = GetComponent<SpriteRenderer>();
-
-        isStep = false;       
+        planet_GasSpriteRenderer = GetComponent<SpriteRenderer>();          
 
         vanishDelay = new WaitForSeconds(0.1f);
 

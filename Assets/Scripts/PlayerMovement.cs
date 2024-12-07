@@ -156,9 +156,9 @@ public class PlayerMovement : MonoBehaviour
 
         #region 일반 행성 충돌, 가스형 행성 충돌
 
-        if (collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false))
+        if (gamemanager.Fall == true  && collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false))
         //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성이고 시작버튼을 눌렀을 때,
-        // 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과
+        // 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과 마지막으로 떨어지는 중 일때만
         {
 
             #region// 가스형 행성 충돌
@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         // 한번만 스크립트 가져오기
-        if (objectPooling_Item == null) { objectPooling_Item = collision.GetComponentInParent<ObjectPooling>(); Debug.Log("없음"); }
+        if (objectPooling_Item == null) objectPooling_Item = collision.GetComponentInParent<ObjectPooling>();
 
         #region 아이템 충돌
         if (collision.CompareTag("Item"))

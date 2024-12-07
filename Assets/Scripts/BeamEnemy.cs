@@ -48,9 +48,7 @@ public class BeamEnemy : MonoBehaviour
 
         objectPooling = GetComponentInParent<ObjectPooling>();
 
-        beamCollider = beamFire.GetComponent<BoxCollider2D>();
-
-        firstAttack = false;
+        beamCollider = beamFire.GetComponent<BoxCollider2D>();       
 
         beamsIndex = 0;
 
@@ -71,6 +69,7 @@ public class BeamEnemy : MonoBehaviour
         // 위치 정하기
         transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
             (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y + 10)); ;
+
         // 컴포넌트 비활성화
         beamCollider.enabled = false;
 

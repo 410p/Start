@@ -9,9 +9,7 @@ public class Planet : MonoBehaviour
 
     // 스폰 카운트
     private int spawnCount;
-
-    // 첫번 째만 높이 조정
-    private bool first;
+    
     private void Awake()
     {
         objectPooling = GetComponentInParent<ObjectPooling>();
@@ -22,13 +20,14 @@ public class Planet : MonoBehaviour
     private void OnEnable()
     {
         // 초반 생성할 때 높이 조정
-        if (first == false)
+        if (spawnCount > 30)
         {
             
             transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
                 (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y + spawnCount));
+            spawnCount++;
 
-            first = true;
+
         }
         else
         {

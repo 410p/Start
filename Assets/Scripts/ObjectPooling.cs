@@ -85,7 +85,7 @@ public class ObjectPooling : MonoBehaviour
         Destroy(poolObject);
     }
 
-    // 오브젝트풀에서 게임오브젝트를 꺼내는 메소드    해야하는 것> 가스형
+    // 오브젝트풀에서 게임오브젝트를 꺼내는 메소드
     public GameObject GetOut()
     {       
         return objectPooling.Get();

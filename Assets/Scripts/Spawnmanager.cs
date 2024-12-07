@@ -22,18 +22,22 @@ public class Spawnmanager : MonoBehaviour
     [SerializeField] ObjectPooling item_Life;
     // 점프력 증가
     [SerializeField] ObjectPooling item_JumpPower;
+    // 얼리는 적
+    [SerializeField] ObjectPooling FreezingEnemy;
     #endregion
 
     private WaitForSeconds spawnDelay;
+
+    private WaitForSeconds firstSpawnDelay;
 
     #region// 시작
     private void Start()
     {
         StartCoroutine(SpawnPlanet());
 
-        spawnDelay = new WaitForSeconds(0.002f);
+        spawnDelay = new WaitForSeconds(0.02f);
 
-        
+        firstSpawnDelay = new WaitForSeconds(0.01f);
     }
 
     // 처음 시작 시 행성 생성로직
@@ -56,55 +60,61 @@ public class Spawnmanager : MonoBehaviour
 
             spawnCount++;
 
-            yield return 0.01f;
+            yield return firstSpawnDelay;
         }
     }
     #endregion
 
     #region// 아이템 
 
-    private int spawnIndex_Planet;   
+    private int spawnIndex_Planet;
 
     public IEnumerator Item()
     {
+        // 대기
+        yield return spawnDelay;
+
 
         // 0 ~ 2
         spawnIndex_Planet = Random.Range(0, 3);
 
-        yield return spawnDelay;
 
         switch (spawnIndex_Planet)
         {
             // 체력 생성
             case 0:
                 item_Life.GetOut();
-                break;
+                 break;
 
             // 실드 생성
             case 1:
                 item_Shield.GetOut();
-                break;
+                 break;
 
             // 점프력 증가 생성
             case 2:
                 item_JumpPower.GetOut();
-                break;           
+                 break;
         }
 
+
+        yield break;
     }
 
     #endregion
 
     #region// 적
-    private int spawnIndex_Enemy;   
+    private int spawnIndex_Enemy;
 
     public IEnumerator Enemy()
-    {
+    {       
+
+        // 대기
+        yield return spawnDelay;
 
         // 0 ~ 3
         spawnIndex_Enemy = Random.Range(0, 4);
 
-        yield return spawnDelay;
 
         switch (spawnIndex_Enemy)
         {
@@ -113,6 +123,7 @@ public class Spawnmanager : MonoBehaviour
                 horizontalEnemy.GetOut();
                 break;
 
+
             // 빔 쏘는 적 생성 
             case 1:
                 beamEnemy.GetOut();
@@ -120,7 +131,8 @@ public class Spawnmanager : MonoBehaviour
 
             // 얼리는 적 생성
             case 2:
-                // 얼리는 적 생성
+                //Debug.Log("6");
+                FreezingEnemy.GetOut();
                 break;
 
             // 가만히 있는 적 생성
@@ -128,6 +140,9 @@ public class Spawnmanager : MonoBehaviour
                 // 가만히 있는 적 생성
                 break;
         }
+
+        // 대기
+        yield break;
 
     }
 
@@ -137,11 +152,13 @@ public class Spawnmanager : MonoBehaviour
 
     public IEnumerator Planet()
     {
-        // 0 ~ 1
-        spawnIndex_Planet = Random.Range(0, 2);
 
         // 대기
         yield return spawnDelay;
+
+        // 0 ~ 1
+        spawnIndex_Planet = Random.Range(0, 2);
+
 
         // 소행성 생성
         if (spawnIndex_Planet == 0)
@@ -153,6 +170,10 @@ public class Spawnmanager : MonoBehaviour
         {
             planet_Gas.GetOut();
         }
+
+
+        yield break;
+
     }
 
     #endregion
