@@ -106,6 +106,8 @@ public class HorizontalEnemy : MonoBehaviour
             }
             else
             {
+                objectPooling.SoundManager.ListenerSound(SoundType.Hit);
+
                 hpManager.MinusHP();
             }
 
@@ -137,7 +139,7 @@ public class HorizontalEnemy : MonoBehaviour
     {
         // 속도
         movementSpeed = 0;
-
+        objectPooling.SoundManager.ListenerSound(SoundType.HorizontalEnemy);
         while (true)
         {
             // 폭발 스프라이트를 끝까지 사용했다면

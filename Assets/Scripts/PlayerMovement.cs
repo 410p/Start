@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float size;
 
-
+    private SoundManager soundManager;
     private void Awake()
     {
         // 할당
@@ -78,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
         isSmall = false;
 
         playerAnimator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        soundManager = FindAnyObjectByType<SoundManager>();
     }
 
 
@@ -175,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             #endregion
-
+            soundManager.ListenerSound(SoundType.Jump);
             //Debug.Log("조건문 실행!");
             playerRigidbody.velocity = new Vector2(0, 0.8f); //y속도 초기화
             playerRigidbody.AddForce(new Vector2(0, speed)); //y방향으로 speed만큼 힘 주기
@@ -194,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
             //점프 아이템
             if (collision.name.Contains("Item_JumpPower"))
             {
-               
+                soundManager.ListenerSound(SoundType.Buff);
 
                 if (!isJumpBoost)
                 {
@@ -210,6 +215,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (collision.name.Contains("Mushroom_Big"))
             {
+                soundManager.ListenerSound(SoundType.Buff);
                 Debug.Log("감지");
                 if (!isBig)
                 {
@@ -226,6 +232,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (collision.name.Contains("Mushroom_Small"))
             {
+                soundManager.ListenerSound(SoundType.Debuff);
                 if (!isSmall)
                 {
                     if (isBig)
@@ -243,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
             //체력 아이템
             else if (collision.name.Contains("Item_Life"))
             {
-
+                soundManager.ListenerSound(SoundType.Buff);
                 hpManager.AddHp();
 
                 objectPooling_Item.Return(collision.gameObject);
@@ -251,6 +258,7 @@ public class PlayerMovement : MonoBehaviour
             //실드 아이템
             else if (collision.name.Contains("Item_Shield"))
             {
+                soundManager.ListenerSound(SoundType.Buff);
                 //실드
                 isShield = true;
 
@@ -261,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
             //거대화 아이템
             else if (collision.name.Contains("Item_??"))
             {
+                soundManager.ListenerSound(SoundType.Buff);
                 if (!isBig)
                 {
                     isBig = true;
@@ -271,6 +280,7 @@ public class PlayerMovement : MonoBehaviour
             //소형화 아이템
             else if (collision.name.Contains("Item_!!"))
             {
+                soundManager.ListenerSound(SoundType.Debuff);
                 if (!isSmall)
                 {
                     isSmall = true;

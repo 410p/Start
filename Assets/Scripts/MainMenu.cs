@@ -15,6 +15,8 @@ public class MainMenu : MonoBehaviour
     // 게임방법
     [SerializeField] Button menualButton;
 
+    [SerializeField] SoundManager soundManager;
+
     private void Start()
     {
         quitButton.onClick.AddListener(QuitButton);
@@ -24,19 +26,20 @@ public class MainMenu : MonoBehaviour
 
     // 나가기
     private void QuitButton()
-    {
+    {        
         Application.Quit();
     }
     
     // 시작하기
     private void StartButton()
     {
-        SceneManager.LoadScene("InGame");
+        soundManager.ListenerSound(SoundType.BackGround);
+        SceneManager.LoadScene(1);
     }
     
     // 게임방법
     private void MenualButton()
     {
-
+        soundManager.ListenerSound(SoundType.Click);
     }
 }

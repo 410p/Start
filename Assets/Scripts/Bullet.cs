@@ -21,7 +21,12 @@ public class Bullet : MonoBehaviour
     {
         speed = 10;
 
-        objectPooling = GetComponentInParent<ObjectPooling>();
+        objectPooling = GetComponentInParent<ObjectPooling>();        
+    }
+
+    private void OnEnable()
+    {
+        objectPooling.SoundManager.ListenerSound(SoundType.bullet_Ice);
     }
 
     // 위치 받아오기
@@ -43,7 +48,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-
+            
             StartCoroutine(PlayerFreeze(collision.gameObject));           
 
         }

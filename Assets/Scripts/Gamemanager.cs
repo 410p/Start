@@ -27,7 +27,10 @@ public class Gamemanager : MonoBehaviour
 
     // 떨어지다 > 플레이어가 떨어지는지?
     private bool fall;
-    public bool Fall { get { return fall; } set { fall = value; } }  
+    public bool Fall { get { return fall; } set { fall = value; } }
+
+    // 사운드 매니저
+    private SoundManager soundManager;
 
     private void Awake()
     {
@@ -43,11 +46,12 @@ public class Gamemanager : MonoBehaviour
         // Start에서 할당한 이유 > playerMovement.PlayerRigidbody를 Awake에서 가져오기 때문에 Awake에서 할당하면 NullReference오류뜸
         playerRb = playerMovement.PlayerRigidbody;
 
-        
+        soundManager = FindObjectOfType<SoundManager>();
+
         // 처음 중력을 0으로 설정
         playerRb.gravityScale = 0;
 
-        dieForce = 3f;       
+        dieForce = 3f;
     }
 
     private void Update()
@@ -62,7 +66,6 @@ public class Gamemanager : MonoBehaviour
 
             // 중력을 원래대로 돌림
             playerRb.gravityScale = 0.3f;
-
         }
 
     }
@@ -71,6 +74,7 @@ public class Gamemanager : MonoBehaviour
     public void Die(bool deathByEnemy)
     {
         gameOver = true;
+        soundManager.ListenerSound(SoundType.GameOver);
 
         // 적한테 죽었다면
         if (deathByEnemy)

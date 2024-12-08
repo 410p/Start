@@ -83,12 +83,14 @@ public class BeamEnemy : MonoBehaviour
 
     // 빔을 발사하는 함수
     private IEnumerator FireBeam()
-    {
+    {        
         // 위험 표시 생성
         Beam_intersection.SetActive(true);
 
         // 처음 발사까지 걸리는 시간
         yield return beamFirstFireTime;
+
+        objectPooling.SoundManager.ListenerSound(SoundType.BeamEnemy);
 
         // 최대로 커질 때 까지 반복
         while (beamsIndex < beams.Length)

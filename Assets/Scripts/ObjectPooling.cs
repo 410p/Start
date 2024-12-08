@@ -35,7 +35,11 @@ public class ObjectPooling : MonoBehaviour
     public Gamemanager Gamemanager => gamemanager;
 
     // 부모
-    [SerializeField] Transform poolParent;   
+    [SerializeField] Transform poolParent;
+
+    // 사운드 매니저
+    private SoundManager soundManager;
+    public SoundManager SoundManager => soundManager;
 
     void Awake()
     {
@@ -59,6 +63,11 @@ public class ObjectPooling : MonoBehaviour
             defaultCapacity: defaultCapacity, // 기본 생성 갯수
             maxSize: maxSize // 최대 생성 갯수
         );
+    }
+
+    private void Start()
+    {
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     // 초반 행성 생성
