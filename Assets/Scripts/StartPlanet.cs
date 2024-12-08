@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StartPlanet : MonoBehaviour
@@ -11,6 +12,8 @@ public class StartPlanet : MonoBehaviour
     private float firstJumpForce;
 
     [SerializeField] Gamemanager gamemanager;
+
+    [SerializeField] TextMeshProUGUI startText;
     
     private void Start()
     {
@@ -24,6 +27,8 @@ public class StartPlanet : MonoBehaviour
         // 충돌한 물체의 태그가 플레이어라면
         if (collision.gameObject.CompareTag("Player") && gamemanager.GameStart == true)
         {
+            Destroy(startText);
+
             // 플레이어 Rigidbody2D가져오기
             playerRb = collision.gameObject.GetComponent<PlayerMovement>().PlayerRigidbody;
 
