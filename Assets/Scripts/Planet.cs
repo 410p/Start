@@ -20,7 +20,7 @@ public class Planet : MonoBehaviour
     private void OnEnable()
     {
         // 초반 생성할 때 높이 조정
-        if (spawnCount > 30)
+        if (spawnCount < 30)
         {
             
             transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),

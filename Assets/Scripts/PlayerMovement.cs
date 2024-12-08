@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     // 플레이어 애니메이터
     private Animator playerAnimator;
+    public Animator PlayerAnimator => playerAnimator;
 
     //점프 효과를 받고 있는지
     private bool isJumpBoost;
@@ -53,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isShield;
     public bool IsShield { get { return isShield; } set { isShield = value; } }
 
-
+    private bool movement;
+    public bool Movement { get{ return movement; } set { movement = value; } }
 
     // ObjectPooling  아이템 스크립트
     private ObjectPooling objectPooling_Item;  
@@ -65,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // 할당
+
+        movement = true;
 
         playerRigidbody = GetComponent<Rigidbody2D>();
 
@@ -82,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         if (gamemanager.GameOver == true) return;
 
         // 게임 시작했다면
-        if (gamemanager.GameStart == true)
+        if (gamemanager.GameStart == true && movement == true)
         {
             #region 점프 구현  
 

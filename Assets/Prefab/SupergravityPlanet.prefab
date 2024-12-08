@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7566196083692459801}
   - component: {fileID: 3162761978620110359}
   m_Layer: 0
-  m_Name: Planet_Gas
+  m_Name: SupergravityPlanet
   m_TagString: Planet_Gas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

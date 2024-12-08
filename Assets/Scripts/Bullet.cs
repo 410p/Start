@@ -13,6 +13,10 @@ public class Bullet : MonoBehaviour
 
     private ObjectPooling objectPooling;
 
+    private Rigidbody2D playerRb;
+
+
+
     private void Awake()
     {
         speed = 10;
@@ -31,7 +35,7 @@ public class Bullet : MonoBehaviour
     // 위치 이동
     private void Update()
     {
-        transform.position += (pos *  speed * Time.deltaTime);
+        transform.position += (pos * speed * Time.deltaTime);
     }
 
     // 충돌시
@@ -39,10 +43,8 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // 삭제
-            //collision.GetComponent<PlayerMovement>();
 
-            objectPooling.Return(gameObject);
+            StartCoroutine(PlayerFreeze(collision.gameObject));           
 
         }
     }
@@ -56,4 +58,29 @@ public class Bullet : MonoBehaviour
             objectPooling.Return(gameObject);
         }
     }
+
+    // 플레이어 얼리기
+    private IEnumerator PlayerFreeze(GameObject player)
+    {
+        playerRb = player.GetComponent<Rigidbody2D>();
+
+        // 플레이어 얼리기
+        playerRb.GetComponent<PlayerMovement>().PlayerAnimator.SetBool("IsFreeze", true);
+        player.GetComponent<PlayerMovement>().Movement = false;
+        playerRb.gravityScale = 0;
+        playerRb.velocity = Vector3.zero;
+        
+
+        yield return new WaitForSeconds(0.5f);
+
+        // 다시 돌려 놓기
+        playerRb.GetComponent<PlayerMovement>().PlayerAnimator.SetBool("IsFreeze", false);
+        player.GetComponent<PlayerMovement>().Movement = true;
+        playerRb.gravityScale = 0.3f;
+
+        objectPooling.Return(gameObject);
+
+        yield break;
+    }
+
 }
