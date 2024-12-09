@@ -165,25 +165,31 @@ public class PlayerMovement : MonoBehaviour
 
         #region 일반 행성 충돌, 가스형 행성 충돌
 
-        if (gamemanager.Fall == true  && collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false))
+        if (gamemanager.Fall == true && collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false && gamemanager.Fall))
         //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성이고 시작버튼을 눌렀을 때,
         // 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과 마지막으로 떨어지는 중 일때만
         {
 
+            soundManager.ListenerSound(SoundType.Jump);
+            //Debug.Log("조건문 실행!");
+            playerRigidbody.velocity = new Vector2(0, 0.8f); //y속도 초기화
+
             #region// 가스형 행성 충돌
 
             // 태그가 소행성이고, 한번도 안 밟았다면, 그리고 플레이어가 내려갈 때만
-            if (collision.CompareTag("Planet_Gas") && gamemanager.Fall == true)
+            if (collision.CompareTag("Planet_Gas"))
             {
+                playerRigidbody.AddForce(new Vector2(0, speed-200)); //y방향으로 speed만큼 힘 주기
                 // 사라지는 메서드 Vanish호출
                 StartCoroutine(collision.GetComponent<Planet_Gas>().Vanish());
             }
 
             #endregion
-            soundManager.ListenerSound(SoundType.Jump);
-            //Debug.Log("조건문 실행!");
-            playerRigidbody.velocity = new Vector2(0, 0.8f); //y속도 초기화
-            playerRigidbody.AddForce(new Vector2(0, speed)); //y방향으로 speed만큼 힘 주기
+
+            else
+            {
+                playerRigidbody.AddForce(new Vector2(0, speed)); //y방향으로 speed만큼 힘 주기
+            }
             isPossibleToJump = false; //점프한 직후 충돌 불가로 설정            
         }
         #endregion

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gamemanager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     // 플레이어 게임오브젝트
     [SerializeField] PlayerMovement playerMovement;
+
+    [SerializeField] Image HurtImg;
 
     // 게임오버 변수
     private bool gameOver;
@@ -93,5 +96,10 @@ public class Gamemanager : MonoBehaviour
         Debug.Log("사망");
 
 
+    }
+
+    public void Hurt()
+    {
+        //HurtImg.
     }
 }
