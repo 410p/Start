@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Spawnmanager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class Spawnmanager : MonoBehaviour
     [SerializeField] ObjectPooling item_JumpPower;
     // 얼리는 적
     [SerializeField] ObjectPooling FreezingEnemy;
+    // 배경
+    [SerializeField] ObjectPooling backGround;
     #endregion
 
     private WaitForSeconds spawnDelay;
@@ -33,15 +36,15 @@ public class Spawnmanager : MonoBehaviour
     #region// 시작
     private void Start()
     {
-        StartCoroutine(SpawnPlanet());
+        StartCoroutine(SpawnPlanetAndBG());
 
         spawnDelay = new WaitForSeconds(0.02f);
 
         firstSpawnDelay = new WaitForSeconds(0.01f);
     }
 
-    // 처음 시작 시 행성 생성로직
-    private IEnumerator SpawnPlanet()
+    // 처음 시작 시 행성 및 배경화면 생성로직
+    private IEnumerator SpawnPlanetAndBG()
     {
         // 스폰 횟수
         int spawnCount = 0;
@@ -56,7 +59,7 @@ public class Spawnmanager : MonoBehaviour
             }
 
             planet.GetOut();
-
+            backGround.GetOut();
 
             spawnCount++;
 

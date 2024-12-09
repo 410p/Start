@@ -20,7 +20,9 @@ public class Respawn : MonoBehaviour
     // 체력
     [SerializeField] ObjectPooling item_Life;
     // 점프력 증가
-    [SerializeField] ObjectPooling item_JumpPower;    
+    [SerializeField] ObjectPooling item_JumpPower;
+    // 배경
+    [SerializeField] ObjectPooling backGround;
     #endregion
 
     // 일반행성 스폰 카운트
@@ -109,6 +111,13 @@ public class Respawn : MonoBehaviour
         {
             // 반환
             asteroids.Return(collision.gameObject);
+        }
+        else if (collision.CompareTag("BackGround"))
+        {
+            Debug.Log("`1");
+            backGround.Return(collision.gameObject);
+
+            backGround.GetOut();
         }
         
     }

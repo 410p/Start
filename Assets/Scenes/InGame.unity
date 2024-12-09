@@ -509,6 +509,7 @@ MonoBehaviour:
   item_Shield: {fileID: 453786807}
   item_Life: {fileID: 263791984}
   item_JumpPower: {fileID: 1044758682}
+  backGround: {fileID: 830225657}
   spawnmanager: {fileID: 720832867}
 --- !u!50 &275805050
 Rigidbody2D:
@@ -799,6 +800,7 @@ Transform:
   - {fileID: 1044758681}
   - {fileID: 1356489883}
   - {fileID: 2076654878}
+  - {fileID: 830225653}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &720832865
@@ -851,6 +853,7 @@ MonoBehaviour:
   item_Life: {fileID: 263791984}
   item_JumpPower: {fileID: 1044758682}
   FreezingEnemy: {fileID: 1356489884}
+  backGround: {fileID: 830225657}
 --- !u!1 &772933216
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,6 +958,54 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &830225652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 830225653}
+  - component: {fileID: 830225657}
+  m_Layer: 0
+  m_Name: BackGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &830225653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830225652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 720832863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &830225657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830225652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e4739e24c3f7b47b7bb881dda60b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8130593524052771694, guid: 2926d69b0ccca6947ba30dd7bdd6f876, type: 3}
+  defaultCapacity: 30
+  maxSize: 35
+  poolParent: {fileID: 830225653}
 --- !u!1 &886596359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,12 +1787,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.04274979}
+  m_Offset: {x: 0, y: -0.7037909}
   serializedVersion: 2
-  m_Radius: 0.5520932
+  m_Radius: 3.296209
 --- !u!212 &1766133718
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1804,7 +1855,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.82, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

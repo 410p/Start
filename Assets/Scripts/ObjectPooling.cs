@@ -14,10 +14,7 @@ public class ObjectPooling : MonoBehaviour
 
     // 플레이어 트랜스 폼
     private Transform playerTr;
-    public Transform PlayerTr => playerTr;
-
-    // 최종스폰 위치
-    private Vector2 spawnPos;
+    public Transform PlayerTr => playerTr;    
 
     // 어느곳에 소환될 것 인지?
     private float spawnMinX;
@@ -32,7 +29,7 @@ public class ObjectPooling : MonoBehaviour
     public float SpawnMaxY => spawnMaxY;
 
     private Gamemanager gamemanager;
-    public Gamemanager Gamemanager => gamemanager;
+    
 
     // 부모
     [SerializeField] Transform poolParent;
