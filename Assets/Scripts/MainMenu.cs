@@ -84,13 +84,13 @@ public class MainMenu : MonoBehaviour
     // 다음 버튼
     private void NextButton()
     {
+        // 끝까지 도달했다면 처음으로
+        if (howToPlayIndex <= 0) return;
+
         soundManager.ListenerSound(SoundType.Click);
 
         // 해당 게임방법 사라지고
         howToPlay[howToPlayIndex].SetActive(false);
-
-        // 끝까지 도달했다면 처음으로
-        if (howToPlayIndex <= 0) howToPlayIndex = howToPlay.Length - 3;
 
         howToPlayIndex--;
         // 다음 게임방법 나오기
@@ -100,15 +100,15 @@ public class MainMenu : MonoBehaviour
     // 이전 버튼
     private void BeforeButton()
     {
+        // 처음 끝에 도달했다면 맨 마지막으로
+        if (4 + howToPlayIndex >= howToPlay.Length) return;
+
         soundManager.ListenerSound(SoundType.Click);
 
         // 해당 게임방법 사라지고
         howToPlay[howToPlayIndex].SetActive(false);
 
         howToPlayIndex++;
-
-        // 처음 끝에 도달했다면 맨 마지막으로
-        if (3 + howToPlayIndex >= howToPlay.Length) howToPlayIndex = 0;
 
         // 이전 게임방법 나오기
         howToPlay[howToPlayIndex].SetActive(true);

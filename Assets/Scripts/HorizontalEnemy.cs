@@ -91,7 +91,7 @@ public class HorizontalEnemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("PlayerCollider"))
+        if (collision.CompareTag("Player"))
         {
             // hpManager 할당이 안 됐을 때는 플레이어의 PlayerMovement에서 hpManager 프로퍼티를 사용해 할당
             if (hpManager == null) hpManager = collision.GetComponent<PlayerMovement>().HpManager; 
@@ -108,7 +108,7 @@ public class HorizontalEnemy : MonoBehaviour
             {
                 objectPooling.SoundManager.ListenerSound(SoundType.Hit);
 
-                hpManager.MinusHP();
+                StartCoroutine(hpManager.MinusHP());
             }
 
             // 충돌 감지 끄기

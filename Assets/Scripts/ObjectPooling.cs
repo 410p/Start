@@ -28,8 +28,7 @@ public class ObjectPooling : MonoBehaviour
     public float SpawnMinY => spawnMinY;
     public float SpawnMaxY => spawnMaxY;
 
-    private Gamemanager gamemanager;
-    
+    private Gamemanager gamemanager;   
 
     // ºÎ¸ð
     [SerializeField] Transform poolParent;

@@ -314,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                hpManager.MinusHP();
+                StartCoroutine(hpManager.MinusHP());
             }
         }
 
