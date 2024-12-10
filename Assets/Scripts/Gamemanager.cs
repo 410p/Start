@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,12 @@ public class Gamemanager : MonoBehaviour
     [SerializeField] PlayerMovement playerMovement;
 
     [SerializeField] Image HurtImg;
+
+    // 플레이어 트랜스폼
+    [SerializeField] Transform playerTr;
+
+    // 거리
+    [SerializeField] TextMeshProUGUI tmp_Distance;
 
     // 게임오버 변수
     private bool gameOver;
@@ -34,6 +41,9 @@ public class Gamemanager : MonoBehaviour
 
     // 사운드 매니저
     private SoundManager soundManager;
+
+    // 플레이어와의 거리
+    private float distance;
 
     private void Awake()
     {
@@ -66,6 +76,8 @@ public class Gamemanager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             gameStart = true;
+
+            StartCoroutine(Distance_Player());
 
             // 중력을 원래대로 돌림
             playerRb.gravityScale = 0.3f;
@@ -101,5 +113,22 @@ public class Gamemanager : MonoBehaviour
     public void Hurt()
     {
         //HurtImg.
+    }
+
+    // 플레이어와의 거리
+    public IEnumerator Distance_Player()
+    {
+        while (true)
+        {
+            if (gameOver == true) yield break;
+
+            distance = Vector2.Distance(transform.position, playerTr.transform.position);
+
+            // 높이 UI동기화 및 distance단위를 1의자리까지만 설정
+            tmp_Distance.text = $"높이 : {distance:#}M";
+
+            // 한 프레임 휴식
+            yield return null;
+        }
     }
 }

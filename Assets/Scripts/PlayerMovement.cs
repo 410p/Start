@@ -161,11 +161,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (gamemanager.GameOver == true) return;
+        if (gamemanager.GameOver == true) return;     
 
         #region 일반 행성 충돌, 가스형 행성 충돌
 
-        if (gamemanager.Fall == true && collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false && gamemanager.Fall))
+        if (gamemanager.Fall == true && collision.CompareTag("Planet") && isPossibleToJump || (collision.CompareTag("Planet_Start") && gamemanager.GameStart == true) || (collision.CompareTag("Planet_Gas") && collision.GetComponent<Planet_Gas>().IsStep == false))
         //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성이고 시작버튼을 눌렀을 때,
         // 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과 마지막으로 떨어지는 중 일때만
         {
@@ -197,9 +197,9 @@ public class PlayerMovement : MonoBehaviour
         // 한번만 스크립트 가져오기
         if (objectPooling_Item == null) objectPooling_Item = collision.GetComponentInParent<ObjectPooling>();
 
-        #region 아이템 충돌
+        #region 아이템 충돌 
         if (collision.CompareTag("Item"))
-        {
+        {// 플레이어 콜라이더에 충돌했을 때만
             
 
             //점프 아이템
@@ -301,7 +301,7 @@ public class PlayerMovement : MonoBehaviour
 
         #region// 빔 쏘는 적의 빔 충돌     
 
-        // 태그가 빔이고 첫번 째 공격이라면
+        // 태그가 빔이고 첫번 째 공격이라면 또 플레이어 콜라이더 일 때만
         if (collision.CompareTag("Beam") && collision.GetComponentInParent<BeamEnemy>().FirstAttack == false)
         {
             // 할당
@@ -322,8 +322,8 @@ public class PlayerMovement : MonoBehaviour
 
         #region// 소행성 충돌
 
-        // 내려갈 때만
-        if (collision.CompareTag("Asteroids") && gamemanager.Fall == true)
+        // 내려갈 때만 그리고 플레이어 콜라이더 일 때만
+        if (collision.CompareTag("Asteroids") && gamemanager.Fall == true && gamemanager.Fall)
         {
             // 사라지는 애니메이션 호출
             StartCoroutine(collision.GetComponent<Asteroids>().Vanish());
