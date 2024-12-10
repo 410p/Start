@@ -158,6 +158,8 @@ public class PlayerMovement : MonoBehaviour
     }
     Collider2D c2;
 
+    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -169,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         //점프가 가능한 상황이고, 충돌한 오브젝트가 행성일 때 또는 시작행성이고 시작버튼을 눌렀을 때,
         // 또는 가스형 행성일 때 한번 도 밟지 않았다면 통과 마지막으로 떨어지는 중 일때만
         {
+            
 
             soundManager.ListenerSound(SoundType.Jump);
             //Debug.Log("조건문 실행!");
