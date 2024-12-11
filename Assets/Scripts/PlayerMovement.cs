@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpPrevTime;
     private float bigPrevTime;
     private float smallPrevTime;
+    private float shieldPrevTime;
 
     [SerializeField]
     private float jumpBoostCooldown;
@@ -50,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
     private float bigCooldown;
     [SerializeField]
     private float smallCooldown;
+    [SerializeField]
+    private float shieldCooldown;
 
     private bool isShield;
     public bool IsShield { get { return isShield; } set { isShield = value; } }
@@ -152,6 +155,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.localScale += new Vector3(size, size);
                 isSmall = false;
+            }
+            if (Time.time - shieldPrevTime >= shieldCooldown && IsShield)
+            {
+                Debug.Log("실드 해제!");
+                IsShield = false;
             }
             #endregion
         }
@@ -273,6 +281,7 @@ public class PlayerMovement : MonoBehaviour
                 soundManager.ListenerSound(SoundType.Buff);
                 //실드
                 isShield = true;
+                shieldPrevTime = Time.time;
 
                 //실드
                 objectPooling_Item.Return(collision.gameObject);

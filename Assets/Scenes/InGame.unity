@@ -1689,6 +1689,7 @@ MonoBehaviour:
   jumpBoostCooldown: 5
   bigCooldown: 0
   smallCooldown: 0
+  shieldCooldown: 5
   size: 0
 --- !u!70 &1306060751
 CapsuleCollider2D:
