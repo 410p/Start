@@ -11,9 +11,7 @@ public class Gamemanager : MonoBehaviour
     private Rigidbody2D playerRb;
 
     // 플레이어 게임오브젝트
-    [SerializeField] PlayerMovement playerMovement;
-
-    [SerializeField] Image HurtImg;
+    [SerializeField] PlayerMovement playerMovement;    
 
     // 플레이어 트랜스폼
     [SerializeField] Transform playerTr;
@@ -44,6 +42,7 @@ public class Gamemanager : MonoBehaviour
 
     // 플레이어와의 거리
     private float distance;
+    public float Distance => distance;
 
     private void Awake()
     {

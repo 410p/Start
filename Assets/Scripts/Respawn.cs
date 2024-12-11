@@ -25,17 +25,50 @@ public class Respawn : MonoBehaviour
     [SerializeField] ObjectPooling backGround;
     #endregion
 
-    // 일반행성 스폰 카운트
-    private int spawnCount_Planet;
+    private Gamemanager gamemanager;    
+
+    #region// 행성 스폰 카운트
+    // 다른 일반행성 스폰 카운트
+    private int spawnCount_Planet_other;
 
     // 일반행성 스폰 카운트(Enemy용)
     private int spawnCount_Planet_Enemy;
 
     // 일반행성 스폰 카운트(아이템용)
     private int spawnCount_Planet_Item;
+    #endregion
 
+    private Spawnmanager spawnmanager;
 
-    [SerializeField] Spawnmanager spawnmanager;
+    #region// 생성 간격?
+
+    // 다른 행성 용
+    private int planet_Interval_other;
+    // 간격 카운트 > 줄이거나 늘리기 용
+    private int planet_Interval_Count_other;
+
+    // 적 용
+    private int enemy_Interval;
+    // 간격 카운트 > 줄이거나 늘리기 용
+    private int enemy_Interval_Count;
+
+    // 아이템 용
+    private int item_Interval;
+    // 간격 카운트 > 줄이거나 늘리기 용
+    private int item_Interval_Count;    
+
+    #endregion
+
+    private void Awake()
+    {
+        gamemanager = FindObjectOfType<Gamemanager>();
+        spawnmanager = gamemanager.GetComponent<Spawnmanager>();
+
+        planet_Interval_other = 15;
+        enemy_Interval = 25;
+        item_Interval = 30;
+       
+    }
 
     // 콜라이더를 벗어나면 일반행성만 생성
     private void OnTriggerExit2D(Collider2D collision)
@@ -46,40 +79,67 @@ public class Respawn : MonoBehaviour
         if (collision.CompareTag("Planet"))
         {
             // 제거 후 생성
-            planet.Return(collision.gameObject);
+            planet.Return(collision.gameObject);            
 
             planet.GetOut();
-
-            spawnCount_Planet++;
-
+            spawnCount_Planet_other++;
             spawnCount_Planet_Enemy++;
-
             spawnCount_Planet_Item++;
+                       
 
             // 일반행성이 15번이상 생성 되었을 때 랜덤 행성 생성
-            if (spawnCount_Planet >= 15)
+            if (spawnCount_Planet_other >= planet_Interval_other)
             {
                 StartCoroutine(spawnmanager.Planet());
 
-                spawnCount_Planet = 0;
+                spawnCount_Planet_other = 0;
+                // 몇 번 진행 했는지 알려는 변수
+                planet_Interval_Count_other++;
 
+                // 8번 지났다면 
+                if (planet_Interval_Count_other > 8)
+                {
+                    planet_Interval_Count_other = 0;
+
+                    planet_Interval_other--;
+                   
+                }
             }
-            // 일반행성이 10번이상 생성 되었을 때 랜덤 적 생성
-            if (spawnCount_Planet_Enemy >= 10)
+            // 일반행성이 10번이상 생성 되었을 때 랜덤 적 생성 (200미터 이상일 때 생성)
+            if (spawnCount_Planet_Enemy >= enemy_Interval && gamemanager.Distance > 200)
             {
                 StartCoroutine(spawnmanager.Enemy());
 
                 spawnCount_Planet_Enemy = 0;
+                enemy_Interval_Count++;
+
+                // 7번 지났다면 
+                if (enemy_Interval_Count > 7)
+                {
+                    enemy_Interval_Count = 0;
+
+                    enemy_Interval--;
+                }
             }
-            // 일반행성이 25번이상 생성 되었을 때 랜덤 아이템 생성
-            if (spawnCount_Planet_Item >= 25)
+            // 일반행성이 25번이상 생성 되었을 때 랜덤 아이템 생성 (300미터 이상일 때 생성)
+            if (spawnCount_Planet_Item >= item_Interval && gamemanager.Distance > 300)
             {
                 StartCoroutine(spawnmanager.Item());
 
                 spawnCount_Planet_Item = 0;
+                item_Interval_Count++;
 
+
+                // 10번 지났다면 
+                if (planet_Interval_Count_other > 10)
+                {
+                    item_Interval_Count = 0;
+
+                    item_Interval--;
+                }
             }
         }
+
         else if (collision.CompareTag("Player")) // 태그가 Player라면 로드 씬
         {
             //SceneManager.LoadScene();

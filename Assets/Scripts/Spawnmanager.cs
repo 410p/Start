@@ -31,7 +31,7 @@ public class Spawnmanager : MonoBehaviour
 
     private WaitForSeconds spawnDelay;
 
-    private WaitForSeconds firstSpawnDelay;
+    private WaitForSeconds firstSpawnDelay;       
 
     #region// Ω√¿€
     private void Start()

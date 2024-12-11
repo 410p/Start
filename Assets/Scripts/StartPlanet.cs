@@ -22,7 +22,7 @@ public class StartPlanet : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         // 충돌한 물체의 태그가 플레이어라면
         if (collision.gameObject.CompareTag("Player") && gamemanager.GameStart == true)

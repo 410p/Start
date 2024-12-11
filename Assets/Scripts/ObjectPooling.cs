@@ -28,7 +28,9 @@ public class ObjectPooling : MonoBehaviour
     public float SpawnMinY => spawnMinY;
     public float SpawnMaxY => spawnMaxY;
 
-    private Gamemanager gamemanager;   
+    private Gamemanager gamemanager;
+
+    private Camera mainCamera;
 
     // 부모
     [SerializeField] Transform poolParent;
@@ -39,9 +41,15 @@ public class ObjectPooling : MonoBehaviour
 
     void Awake()
     {
+
+        mainCamera = Camera.main;
+
+
         // 할당
-        spawnMinX = -6.32f;
-        spawnMaxX = 3.39f;
+        // 최소 ~ 최대 위치 : 메인카메라의 비율(예 1920 X 1080) 을 게임 좌표(월드 좌표로 변환함) 그리고 x좌표만 가져옴
+        spawnMinX = -mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x;
+        spawnMaxX = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x;
+
         spawnMinY = 6f;
         spawnMaxY = 15f;
 
@@ -53,7 +61,7 @@ public class ObjectPooling : MonoBehaviour
         objectPooling = new ObjectPool<GameObject>(
             createFunc: SpawnObject, // 생성 메소드
             actionOnGet: GetOut_Event, // 풀에서 꺼낼때 처리 이벤트
-            actionOnRelease: Return_Event, // 반환할 때
+            actionOnRelease: Return_Event, // 반환할 s
             actionOnDestroy: DestroyObject, // 풀사이즈가 줄거나 오브젝트풀이 파괴될때
             collectionCheck: false, // 중복 반환 여부 설정
             defaultCapacity: defaultCapacity, // 기본 생성 갯수

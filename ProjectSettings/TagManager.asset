@@ -20,6 +20,7 @@ TagManager:
   - Gamemanager
   - objectPooling_bullet
   - BackGround
+  - cake
   layers:
   - Default
   - TransparentFX

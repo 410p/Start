@@ -644,7 +644,6 @@ MonoBehaviour:
   item_Life: {fileID: 263791984}
   item_JumpPower: {fileID: 1044758682}
   backGround: {fileID: 830225657}
-  spawnmanager: {fileID: 720832867}
 --- !u!50 &275805050
 Rigidbody2D:
   serializedVersion: 4
@@ -950,7 +949,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 1306060750}
-  HurtImg: {fileID: 0}
   playerTr: {fileID: 1306060749}
   tmp_Distance: {fileID: 84568691}
   playerAnimator: {fileID: 1306060747}
@@ -1141,7 +1139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8130593524052771694, guid: 2926d69b0ccca6947ba30dd7bdd6f876, type: 3}
-  defaultCapacity: 30
+  defaultCapacity: 35
   maxSize: 35
   poolParent: {fileID: 830225653}
 --- !u!1 &886596359
@@ -1401,7 +1399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4750424911767895953, guid: 096a604ce5c94eb4eb5c6ca7cbdc182e, type: 3}
   defaultCapacity: 30
-  maxSize: 40
+  maxSize: 30
   poolParent: {fileID: 982853079}
 --- !u!1 &1044758680
 GameObject:
@@ -2240,7 +2238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7289959004813953288, guid: 941afeb81e345fa41a1b182b0898aa45, type: 3}
   defaultCapacity: 20
-  maxSize: 20
+  maxSize: 30
   poolParent: {fileID: 2076654878}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
