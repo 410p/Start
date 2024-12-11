@@ -14,7 +14,7 @@ public class Respawn : MonoBehaviour
     // 가스형 행성
     [SerializeField] ObjectPooling planet_Gas;
     // 소행성
-    [SerializeField] ObjectPooling asteroids;   
+    [SerializeField] ObjectPooling asteroids;
     // 실드
     [SerializeField] ObjectPooling item_Shield;
     // 체력
@@ -27,13 +27,13 @@ public class Respawn : MonoBehaviour
 
     // 일반행성 스폰 카운트
     private int spawnCount_Planet;
-     
+
     // 일반행성 스폰 카운트(Enemy용)
     private int spawnCount_Planet_Enemy;
-  
+
     // 일반행성 스폰 카운트(아이템용)
     private int spawnCount_Planet_Item;
-   
+
 
     [SerializeField] Spawnmanager spawnmanager;
 
@@ -41,6 +41,7 @@ public class Respawn : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
 
+        //Debug.Log(collision);
         // 태그가 Planet이라면 PlanetsPooling호출
         if (collision.CompareTag("Planet"))
         {
@@ -59,7 +60,7 @@ public class Respawn : MonoBehaviour
             if (spawnCount_Planet >= 15)
             {
                 StartCoroutine(spawnmanager.Planet());
-                
+
                 spawnCount_Planet = 0;
 
             }
@@ -114,12 +115,12 @@ public class Respawn : MonoBehaviour
         }
         else if (collision.CompareTag("BackGround"))
         {
-            Debug.Log("`1");
+            //Debug.Log("배경");
             backGround.Return(collision.gameObject);
 
             backGround.GetOut();
         }
-        
+
     }
 
 }
