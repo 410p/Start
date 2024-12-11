@@ -25,10 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public HpManager HpManager => hpManager;
 
     // 캐릭터의 총 도착지점
-    private Vector2 endPos;
-
-    // 마우스의 X축 위치
-    private float playerX;
+    private Vector2 endPos;    
 
     // 플레이어 애니메이터
     private Animator playerAnimator;
@@ -64,9 +61,13 @@ public class PlayerMovement : MonoBehaviour
     private float size;
 
     private SoundManager soundManager;
+
+    private Camera mainCamera;
     private void Awake()
     {
         // 할당
+
+        mainCamera = Camera.main; 
 
         movement = true;
 
@@ -122,15 +123,10 @@ public class PlayerMovement : MonoBehaviour
 
             #endregion
 
-            #region 이동 구현
-
-
-
-            // 마우스의 위치
-            playerX = Input.mousePosition.x / 1920 * 18 - 9;
+            #region 이동 구현                                   
 
             // 캐릭터의 총 도착지점
-            endPos = new Vector2(playerX, transform.position.y);
+            endPos = new Vector2(mainCamera.ScreenPointToRay(Input.mousePosition).origin.x, transform.position.y);
 
             // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 (선형보간의 시간 : 낮을수록 빠르게 간다)
             transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
