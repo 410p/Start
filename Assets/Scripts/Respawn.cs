@@ -23,6 +23,10 @@ public class Respawn : MonoBehaviour
     [SerializeField] ObjectPooling item_JumpPower;
     // 배경
     [SerializeField] ObjectPooling backGround;
+    // 커지는 버섯
+    [SerializeField] ObjectPooling item_BigMushroom;
+    // 작아지는 버섯
+    [SerializeField] ObjectPooling item_SmallMushroom;
     #endregion
 
     private Gamemanager gamemanager;    
@@ -113,8 +117,8 @@ public class Respawn : MonoBehaviour
                    
                 }
             }
-            // 일반행성이 10번이상 생성 되었을 때 랜덤 적 생성 (200미터 이상일 때 생성)
-            if (spawnCount_Planet_Enemy >= enemy_Interval && gamemanager.Distance > 200)
+            // 일반행성이 10번이상 생성 되었을 때 랜덤 적 생성 (150미터 이상일 때 생성)
+            if (spawnCount_Planet_Enemy >= enemy_Interval && gamemanager.Distance > 150)
             {
                 StartCoroutine(spawnmanager.Enemy());
 
@@ -129,8 +133,8 @@ public class Respawn : MonoBehaviour
                     enemy_Interval--;
                 }
             }
-            // 일반행성이 25번이상 생성 되었을 때 랜덤 아이템 생성 (300미터 이상일 때 생성)
-            if (spawnCount_Planet_Item >= item_Interval && gamemanager.Distance > 300)
+            // 일반행성이 25번이상 생성 되었을 때 랜덤 아이템 생성 (200미터 이상일 때 생성)
+            if (spawnCount_Planet_Item >= item_Interval && gamemanager.Distance > 200)
             {
                 StartCoroutine(spawnmanager.Item());
 
@@ -162,6 +166,14 @@ public class Respawn : MonoBehaviour
             else if (collision.gameObject.name.Contains("Item_JumpPower"))
             {
                 item_JumpPower.Return(collision.gameObject);
+            }
+            else if (collision.name.Contains("Item_BigMushroom"))
+            {
+                item_BigMushroom.Return(collision.gameObject);
+            }
+            else if (collision.name.Contains("Item_SmallMushroom"))
+            {
+                item_SmallMushroom.Return(collision.gameObject);
             }
         }
         else if (collision.CompareTag("Planet_Gas")) // 가스형 행성이라면

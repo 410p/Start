@@ -73,6 +73,7 @@ public class SoundManager : MonoBehaviour
         // 배경음악을 실행시켰다면
         if (mainSound[mainSoundIndex].name == SoundType.BackGround.ToString())
         {
+            // 한번 만 실행
             if (return_If == true) return;
 
             // 인게임 노래로 변경

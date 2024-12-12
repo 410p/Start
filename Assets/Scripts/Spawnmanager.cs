@@ -27,11 +27,15 @@ public class Spawnmanager : MonoBehaviour
     [SerializeField] ObjectPooling FreezingEnemy;
     // 배경
     [SerializeField] ObjectPooling backGround;
+    // 커지는 버섯
+    [SerializeField] ObjectPooling item_Mushroom_Big;
+    // 작아지는 버섯
+    [SerializeField] ObjectPooling item_Mushroom_Small;
     #endregion
 
     private WaitForSeconds spawnDelay;
 
-    private WaitForSeconds firstSpawnDelay;       
+    private WaitForSeconds firstSpawnDelay;
 
     #region// 시작
     private void Start()
@@ -78,8 +82,8 @@ public class Spawnmanager : MonoBehaviour
         yield return spawnDelay;
 
 
-        // 0 ~ 2
-        spawnIndex_Planet = Random.Range(0, 3);
+        // 0 ~ 4
+        spawnIndex_Planet = Random.Range(0, 5);
 
 
         switch (spawnIndex_Planet)
@@ -87,17 +91,30 @@ public class Spawnmanager : MonoBehaviour
             // 체력 생성
             case 0:
                 item_Life.GetOut();
-                 break;
+                item_Mushroom_Small.GetOut();
+                break;
 
             // 실드 생성
             case 1:
                 item_Shield.GetOut();
-                 break;
+                item_Mushroom_Small.GetOut();
+                break;
 
             // 점프력 증가 생성
             case 2:
                 item_JumpPower.GetOut();
-                 break;
+                item_Mushroom_Small.GetOut();
+                break;
+            // 커지는 버섯
+            case 3:
+                item_Mushroom_Big.GetOut();
+                break;
+            // 작아지는 버섯
+            case 4:
+                item_Mushroom_Small.GetOut();
+                break;
+
+
         }
 
 
@@ -110,7 +127,7 @@ public class Spawnmanager : MonoBehaviour
     private int spawnIndex_Enemy;
 
     public IEnumerator Enemy()
-    {       
+    {
 
         // 대기
         yield return spawnDelay;
@@ -183,5 +200,5 @@ public class Spawnmanager : MonoBehaviour
 
     #endregion
 
-    
+
 }

@@ -232,14 +232,14 @@ public class PlayerMovement : MonoBehaviour
 
                 objectPooling_Item.Return(collision.gameObject);
             }
-            else if (collision.name.Contains("Mushroom_Big"))
+            else if (collision.name.Contains("Item_BigMushroom"))
             {
                 soundManager.ListenerSound(SoundType.Buff);
                 Debug.Log("감지");
                 if (!isBig)
-                {
+                {                    
                     if (isSmall)
-                    {
+                    {                        
                         transform.localScale += new Vector3(size, size);
                         isSmall = false;
                     }
@@ -249,13 +249,15 @@ public class PlayerMovement : MonoBehaviour
                 bigPrevTime = Time.time;
                 collision.GetComponentInParent<ObjectPooling>().Return(collision.gameObject);
             }
-            else if (collision.name.Contains("Mushroom_Small"))
+            else if (collision.name.Contains("Item_SmallMushroom"))
             {
                 soundManager.ListenerSound(SoundType.Debuff);
                 if (!isSmall)
                 {
+                    
                     if (isBig)
                     {
+                        
                         transform.localScale -= new Vector3(size, size);
                         isBig = false;
                     }
@@ -288,7 +290,7 @@ public class PlayerMovement : MonoBehaviour
                 Shield.SetActive(true);
             }
             //거대화 아이템
-            else if (collision.name.Contains("Item_??"))
+            else if (collision.name.Contains("Item_BigMushroom"))
             {
                 soundManager.ListenerSound(SoundType.Buff);
                 if (!isBig)
@@ -299,7 +301,7 @@ public class PlayerMovement : MonoBehaviour
                 bigPrevTime = Time.time;
             }
             //소형화 아이템
-            else if (collision.name.Contains("Item_!!"))
+            else if (collision.name.Contains("Item_SmallMushroom"))
             {
                 soundManager.ListenerSound(SoundType.Debuff);
                 if (!isSmall)

@@ -43,12 +43,12 @@ public class Planet : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("cake"))
-        {
-            collision.transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
-                (collision.transform.position.y + Random.Range(1, 3)));
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("cake"))
+    //    {
+    //        collision.transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
+    //            (collision.transform.position.y + Random.Range(1, 3)));
+    //    }
+    //}
 }
