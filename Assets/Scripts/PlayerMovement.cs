@@ -66,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
     private SoundManager soundManager;
 
     private Camera mainCamera;
+
+    private GameObject Shield;
     private void Awake()
     {
         // 할당
@@ -154,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Time.time - shieldPrevTime >= shieldCooldown && IsShield)
             {
+                Shield.SetActive(false);
                 Debug.Log("실드 해제!");
                 IsShield = false;
             }
@@ -281,7 +284,8 @@ public class PlayerMovement : MonoBehaviour
 
                 //실드
                 objectPooling_Item.Return(collision.gameObject);
-
+                
+                Shield.SetActive(true);
             }
             //거대화 아이템
             else if (collision.name.Contains("Item_??"))
