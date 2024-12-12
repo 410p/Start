@@ -419,7 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2110511270572203746, guid: 79d5372152689c94fa5d2091399ea143, type: 3}
   defaultCapacity: 5
-  maxSize: 12
+  maxSize: 20
   poolParent: {fileID: 231616616}
 --- !u!1 &240365227
 GameObject:
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2130694688358579389, guid: dff1ea7170c15b14f9c740f103f86b41, type: 3}
   defaultCapacity: 3
-  maxSize: 5
+  maxSize: 10
   poolParent: {fileID: 263791983}
 --- !u!1 &275805046
 GameObject:
@@ -717,7 +717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 135154412703757276, guid: f0ca8159e8115e3479a4fc092a856fe1, type: 3}
   defaultCapacity: 3
-  maxSize: 5
+  maxSize: 10
   poolParent: {fileID: 453786806}
 --- !u!1 &477554498
 GameObject:
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 6740716522815893100, guid: 201c6f86ae4b08840a41b9b56ab06070, type: 3}
   defaultCapacity: 3
-  maxSize: 5
+  maxSize: 10
   poolParent: {fileID: 1044758681}
 --- !u!1 &1131311708
 GameObject:
@@ -1800,7 +1800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 9020147697374276958, guid: 775e5853281f38644a17b026ab5c5343, type: 3}
   defaultCapacity: 5
-  maxSize: 10
+  maxSize: 20
   poolParent: {fileID: 1356489883}
 --- !u!1 &1630960147
 GameObject:
@@ -2193,7 +2193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4991898591747675705, guid: 61623384841b60244b863b7911ca4263, type: 3}
   defaultCapacity: 5
-  maxSize: 12
+  maxSize: 20
   poolParent: {fileID: 1943598446}
 --- !u!1 &2076654877
 GameObject:
@@ -2241,7 +2241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7289959004813953288, guid: 941afeb81e345fa41a1b182b0898aa45, type: 3}
   defaultCapacity: 20
-  maxSize: 30
+  maxSize: 50
   poolParent: {fileID: 2076654878}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

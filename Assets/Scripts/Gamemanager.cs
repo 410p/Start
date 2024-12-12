@@ -48,6 +48,9 @@ public class Gamemanager : MonoBehaviour
     [SerializeField] BoxCollider2D[] boxColliders;  
 
     private Camera mainCamera;
+
+    // 최고 높이
+    private float bestHeight;
     private void Awake()
     {
         // 할당 
@@ -139,7 +142,10 @@ public class Gamemanager : MonoBehaviour
             distance = Vector2.Distance(transform.position, playerTr.transform.position);
 
             // 높이 UI동기화 및 distance단위를 1의자리까지만 설정
-            tmp_Distance.text = $"높이 : {distance:#}M";
+
+            if (bestHeight < distance) bestHeight = distance;
+
+            tmp_Distance.text = $"높이 : {bestHeight:#}M";
 
             // 한 프레임 휴식
             yield return null;

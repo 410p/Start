@@ -73,8 +73,16 @@ public class Respawn : MonoBehaviour
     // 콜라이더를 벗어나면 일반행성만 생성
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.CompareTag("Player")) // 태그가 Player라면 로드 씬
+        {
+            SceneManager.LoadScene(2);
+        }
+
+        if (gamemanager.GameOver) return;
+
 
         //Debug.Log(collision);
+
         // 태그가 Planet이라면 PlanetsPooling호출
         if (collision.CompareTag("Planet"))
         {
@@ -138,12 +146,7 @@ public class Respawn : MonoBehaviour
                     item_Interval--;
                 }
             }
-        }
-
-        else if (collision.CompareTag("Player")) // 태그가 Player라면 로드 씬
-        {
-            SceneManager.LoadScene(3);
-        }
+        }        
         // 태그가 아이템 이라면
         else if (collision.CompareTag("Item"))
         {

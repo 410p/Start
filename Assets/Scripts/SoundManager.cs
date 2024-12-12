@@ -91,7 +91,7 @@ public class SoundManager : MonoBehaviour
         // 게임오버
         else if (mainSound[mainSoundIndex].name == SoundType.GameOver.ToString())
         {
-            for(int j = 1; j <= 3; j++)
+            for(int j = 0; j <= audioSources.Length; j++)
             {
                 audioSources[j].Stop();
             }
