@@ -124,6 +124,7 @@ public class Spawnmanager : MonoBehaviour
             // 좌우로 움직이는 적 생성
             case 0:
                 horizontalEnemy.GetOut();
+                beamEnemy.GetOut();
                 break;
 
 
@@ -136,6 +137,7 @@ public class Spawnmanager : MonoBehaviour
             case 2:
                 //Debug.Log("6");
                 FreezingEnemy.GetOut();
+                beamEnemy.GetOut();
                 break;
 
             // 가만히 있는 적 생성

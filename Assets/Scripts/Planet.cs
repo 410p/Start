@@ -11,34 +11,36 @@ public class Planet : MonoBehaviour
     // 스폰 카운트
     private int spawnCount;
 
+    // 높이 추가
+    private int addHeiht;
 
     private void Awake()
-    {      
+    {
         objectPooling = GetComponentInParent<ObjectPooling>();
-
-        spawnCount = Random.Range(1, 6);
     }
 
     private void OnEnable()
     {
 
-
         // 초반 생성할 때 높이 조정
-        if (spawnCount < 30)
+        if (spawnCount <= 1)
         {
 
-            transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
-                (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y + spawnCount));
-            spawnCount++;
+            addHeiht = Random.Range(1, 6);
 
+
+            transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
+                (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y + addHeiht));
+
+            spawnCount++;
         }
         else
         {
             transform.position = new Vector2((Random.Range(objectPooling.SpawnMinX, objectPooling.SpawnMaxX)),
-                (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y));           
+                (Random.Range(objectPooling.SpawnMinY, objectPooling.SpawnMaxY) + objectPooling.PlayerTr.position.y));
 
         }
-       
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

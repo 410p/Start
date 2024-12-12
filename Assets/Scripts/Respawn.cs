@@ -142,9 +142,7 @@ public class Respawn : MonoBehaviour
 
         else if (collision.CompareTag("Player")) // 태그가 Player라면 로드 씬
         {
-            //SceneManager.LoadScene();
-
-            Debug.Log("로드씬");
+            SceneManager.LoadScene(3);
         }
         // 태그가 아이템 이라면
         else if (collision.CompareTag("Item"))

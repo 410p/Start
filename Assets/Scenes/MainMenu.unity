@@ -597,6 +597,7 @@ MonoBehaviour:
   - {fileID: 2082062946}
   - {fileID: 877682734}
   - {fileID: 1417314728}
+  canvasScaler: {fileID: 507387534}
 --- !u!4 &118986703
 Transform:
   m_ObjectHideFlags: 0

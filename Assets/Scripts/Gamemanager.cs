@@ -11,7 +11,7 @@ public class Gamemanager : MonoBehaviour
     private Rigidbody2D playerRb;
 
     // 플레이어 게임오브젝트
-    [SerializeField] PlayerMovement playerMovement;    
+    [SerializeField] PlayerMovement playerMovement;
 
     // 플레이어 트랜스폼
     [SerializeField] Transform playerTr;
@@ -44,12 +44,27 @@ public class Gamemanager : MonoBehaviour
     private float distance;
     public float Distance => distance;
 
+    // 0 : L , 1 : R
+    [SerializeField] BoxCollider2D[] boxColliders;  
+
+    private Camera mainCamera;
     private void Awake()
     {
         // 할당 
         gameOver = false;
 
+        mainCamera = Camera.main;
+
         gameStart = false;
+
+
+        // 자동으로 사이즈 조정
+        // 왼쪽 위치 할당
+        boxColliders[0].offset = new Vector3(-mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x, 20, 0);
+
+       
+        // 오른쪽 위치 할당
+        boxColliders[1].offset = new Vector3(mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x, 20, 0);
 
     }
 
@@ -67,7 +82,7 @@ public class Gamemanager : MonoBehaviour
     }
 
     private void Update()
-    {
+    {       
         // Update문 분기
         if (gameStart == true) return;
 

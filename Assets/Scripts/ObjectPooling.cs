@@ -51,7 +51,7 @@ public class ObjectPooling : MonoBehaviour
         spawnMaxX = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x;
 
         spawnMinY = 6f;
-        spawnMaxY = 15f;
+        spawnMaxY = 20f;
 
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
 
