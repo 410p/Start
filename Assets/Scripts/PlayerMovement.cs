@@ -68,6 +68,9 @@ public class PlayerMovement : MonoBehaviour
     private Camera mainCamera;
 
     private GameObject Shield;
+
+    // 가만히 있는 적의 오브젝트 풀링
+    [SerializeField] ObjectPooling enemy_Stationary;    
     private void Awake()
     {
         // 할당
@@ -83,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         isBig = false;
         isSmall = false;
 
-        playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();       
     }
 
     private void Start()
@@ -133,8 +136,8 @@ public class PlayerMovement : MonoBehaviour
             // 캐릭터의 총 도착지점
             endPos = new Vector2(mainCamera.ScreenPointToRay(Input.mousePosition).origin.x, transform.position.y);
 
-            // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 (선형보간의 시간 : 낮을수록 빠르게 간다)
-            transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
+            // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 
+            transform.position = Vector2.Lerp(transform.position, endPos, 0.005f);
 
             #endregion
 
@@ -348,5 +351,62 @@ public class PlayerMovement : MonoBehaviour
 
         #endregion
 
+        #region// 가만히 있는 적 충돌
+
+        // 태그가 플레이어 라면 감소 
+        if (collision.CompareTag("Enemy_Stationary"))
+        {
+
+            Debug.Log("1");
+            // 게임이 종료 됐다면 리턴
+            if (gamemanager.GameOver == true) return;
+
+            // 체력 감소
+            if (isShield)
+            {
+                isShield = false;
+            }
+            else
+            {
+                enemy_Stationary.SoundManager.ListenerSound(SoundType.Hit);
+
+                StartCoroutine(hpManager.MinusHP());
+            }
+
+
+            enemy_Stationary.Return(collision.gameObject);
+        }
+
+        #endregion
+
+        #region// 좌우로 움직이는 적
+
+        if (collision.CompareTag("HorizontalEnemy"))
+        {          
+
+            // 게임이 종료 됐다면 리턴
+            if (gamemanager.GameOver == true) return;
+
+            // 체력 감소
+            if (isShield)
+            {
+                isShield = false;
+            }
+            else
+            {
+                soundManager.ListenerSound(SoundType.Hit);
+
+                StartCoroutine(hpManager.MinusHP());
+            }
+
+            // 충돌 감지 끄기
+            collision.GetComponent<HorizontalEnemy>().enabled = false;
+
+            // 폭발 코루틴 호출
+            StartCoroutine(collision.GetComponent<HorizontalEnemy>().Explosion());
+
+        }
+
+        #endregion
     }
 }

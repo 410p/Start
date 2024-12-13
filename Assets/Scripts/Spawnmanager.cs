@@ -31,6 +31,8 @@ public class Spawnmanager : MonoBehaviour
     [SerializeField] ObjectPooling item_Mushroom_Big;
     // 작아지는 버섯
     [SerializeField] ObjectPooling item_Mushroom_Small;
+    // 가만히 있는 적
+    [SerializeField] ObjectPooling enemy_Stationary;
     #endregion
 
     private WaitForSeconds spawnDelay;
@@ -160,6 +162,8 @@ public class Spawnmanager : MonoBehaviour
             // 가만히 있는 적 생성
             case 3:
                 // 가만히 있는 적 생성
+                enemy_Stationary.GetOut();
+                horizontalEnemy.GetOut();
                 break;
         }
 

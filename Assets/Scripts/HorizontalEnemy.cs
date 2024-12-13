@@ -23,19 +23,13 @@ public class HorizontalEnemy : MonoBehaviour
     private int explosionsIndex;
 
     // 메인 스프라이트
-    [SerializeField] Sprite mainSprite;
-
-    // HpManager 스크립트
-    private HpManager hpManager;
+    [SerializeField] Sprite mainSprite;   
 
     // 좌우로 움직이는 적의 콜라이더
     private CircleCollider2D horizontalEnemyCol;
 
     // 오브젝트 풀링 스크립트
-    private ObjectPooling objectPooling;
-
-    // playerMovement 스크립트
-    private PlayerMovement playerMovement;
+    private ObjectPooling objectPooling;    
 
     private Gamemanager gamemanager;
     private void Awake()
@@ -49,9 +43,7 @@ public class HorizontalEnemy : MonoBehaviour
 
         // 부모에게서 가져옴
         objectPooling = GetComponentInParent<ObjectPooling>();
-
-        // 플레이어 무브먼트 스크립트 찾아서 할당 > 1개밖에 없음
-        playerMovement = FindObjectOfType<PlayerMovement>();
+       
 
         // 부모의 부모에게서 게임매니저 할당
         gamemanager = GetComponentInParent<Gamemanager>().GetComponentInParent<Gamemanager>();
@@ -91,34 +83,8 @@ public class HorizontalEnemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("Player"))
-        {
-            // hpManager 할당이 안 됐을 때는 플레이어의 PlayerMovement에서 hpManager 프로퍼티를 사용해 할당
-            if (hpManager == null) hpManager = collision.GetComponent<PlayerMovement>().HpManager; 
-
-            // 게임이 종료 됐다면 리턴
-            if (collision.GetComponent<PlayerMovement>().Gamemanager.GameOver == true) return;
-
-            // 체력 감소
-            if (playerMovement.IsShield)
-            {
-                playerMovement.IsShield = false;
-            }
-            else
-            {
-                objectPooling.SoundManager.ListenerSound(SoundType.Hit);
-
-                StartCoroutine(hpManager.MinusHP());
-            }
-
-            // 충돌 감지 끄기
-            horizontalEnemyCol.enabled = false;
-
-            // 폭발 코루틴 호출
-            StartCoroutine(Explosion());
-
-        }
-        else if (collision.CompareTag("Left Collider"))
+       
+        if (collision.CompareTag("Left Collider"))
         {
             // 오른쪽 이동
             movementDirection = 1;
@@ -135,7 +101,7 @@ public class HorizontalEnemy : MonoBehaviour
     }
 
     // 폭발
-    private IEnumerator Explosion()
+    public IEnumerator Explosion()
     {
         // 속도
         movementSpeed = 0;

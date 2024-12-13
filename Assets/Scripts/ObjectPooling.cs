@@ -47,8 +47,8 @@ public class ObjectPooling : MonoBehaviour
 
         // 할당
         // 최소 ~ 최대 위치 : 메인카메라의 비율(예 1920 X 1080) 을 게임 좌표(월드 좌표로 변환함) 그리고 x좌표만 가져옴
-        spawnMinX = -mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x;
-        spawnMaxX = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x;
+        spawnMinX = -mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x + 1;
+        spawnMaxX = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x + -1;
 
         spawnMinY = 6f;
         spawnMaxY = 20f;

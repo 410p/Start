@@ -26,10 +26,10 @@ public class FreezingEnemy : MonoBehaviour
     
     // 총알 풀링
     private ObjectPooling objectPooling_bullet;
-
+    
     private void Awake()
     {
-        // 할당
+        // 할당        
 
         objectPooling = GetComponentInParent<ObjectPooling>();
 
@@ -77,7 +77,7 @@ public class FreezingEnemy : MonoBehaviour
 
             // 총알의 발사 방향
             spawnDirection = (playerTr.position - transform.position).normalized;
-            // 총알의 스프라이트 방향
+            // 총알의 스프라이트 방향 (아크 탄젠트 사용, 라디안을 디그리로 변환)
             float direction = Mathf.Atan2(directionY, directionX) * Mathf.Rad2Deg;
 
             

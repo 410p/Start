@@ -29,7 +29,7 @@ public class Respawn : MonoBehaviour
     [SerializeField] ObjectPooling item_SmallMushroom;
     #endregion
 
-    private Gamemanager gamemanager;    
+    private Gamemanager gamemanager;
 
     #region// 행성 스폰 카운트
     // 다른 일반행성 스폰 카운트
@@ -59,7 +59,7 @@ public class Respawn : MonoBehaviour
     // 아이템 용
     private int item_Interval;
     // 간격 카운트 > 줄이거나 늘리기 용
-    private int item_Interval_Count;    
+    private int item_Interval_Count;
 
     #endregion
 
@@ -71,7 +71,7 @@ public class Respawn : MonoBehaviour
         planet_Interval_other = 15;
         enemy_Interval = 25;
         item_Interval = 30;
-       
+
     }
 
     // 콜라이더를 벗어나면 일반행성만 생성
@@ -91,13 +91,13 @@ public class Respawn : MonoBehaviour
         if (collision.CompareTag("Planet"))
         {
             // 제거 후 생성
-            planet.Return(collision.gameObject);            
+            planet.Return(collision.gameObject);
 
             planet.GetOut();
             spawnCount_Planet_other++;
             spawnCount_Planet_Enemy++;
             spawnCount_Planet_Item++;
-                       
+
 
             // 일반행성이 15번이상 생성 되었을 때 랜덤 행성 생성
             if (spawnCount_Planet_other >= planet_Interval_other)
@@ -114,7 +114,7 @@ public class Respawn : MonoBehaviour
                     planet_Interval_Count_other = 0;
 
                     planet_Interval_other--;
-                   
+
                 }
             }
             // 일반행성이 10번이상 생성 되었을 때 랜덤 적 생성 (150미터 이상일 때 생성)
@@ -150,7 +150,7 @@ public class Respawn : MonoBehaviour
                     item_Interval--;
                 }
             }
-        }        
+        }
         // 태그가 아이템 이라면
         else if (collision.CompareTag("Item"))
         {
