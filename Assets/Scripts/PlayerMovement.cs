@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
             endPos = new Vector2(mainCamera.ScreenPointToRay(Input.mousePosition).origin.x, transform.position.y);
 
             // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 
-            transform.position = Vector2.Lerp(transform.position, endPos, 0.005f);
+            transform.position = Vector2.Lerp(transform.position, endPos, 0.03F);
 
             #endregion
 
@@ -357,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("Enemy_Stationary"))
         {
 
-            Debug.Log("1");
+            
             // 게임이 종료 됐다면 리턴
             if (gamemanager.GameOver == true) return;
 

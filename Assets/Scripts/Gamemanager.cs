@@ -4,7 +4,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Gamemanager : MonoBehaviour
 {
     // 플레이어 Rigidbody
@@ -45,7 +44,7 @@ public class Gamemanager : MonoBehaviour
     public float Distance => distance;
 
     // 0 : L , 1 : R
-    [SerializeField] BoxCollider2D[] boxColliders;  
+    [SerializeField] BoxCollider2D[] boxColliders;
 
     private Camera mainCamera;
 
@@ -53,7 +52,8 @@ public class Gamemanager : MonoBehaviour
     private float bestHeight;
     private void Awake()
     {
-        // 할당 
+        // 할당         
+
         gameOver = false;
 
         mainCamera = Camera.main;
@@ -65,7 +65,7 @@ public class Gamemanager : MonoBehaviour
         // 왼쪽 위치 할당
         boxColliders[0].offset = new Vector3(-mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x, 20, 0);
 
-       
+
         // 오른쪽 위치 할당
         boxColliders[1].offset = new Vector3(mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.scaledPixelWidth, 0, 0)).x, 20, 0);
 
@@ -85,7 +85,7 @@ public class Gamemanager : MonoBehaviour
     }
 
     private void Update()
-    {       
+    {
         // Update문 분기
         if (gameStart == true) return;
 
@@ -112,14 +112,17 @@ public class Gamemanager : MonoBehaviour
         if (deathByEnemy)
         {
             playerAnimator.SetBool("IsDie", true);
+
+
+            return;
         }
 
         // 플레이어 속도, 중력의 크기 변경
         playerRb.velocity = Vector2.zero;
         playerRb.velocity = new Vector2(0, dieForce);
-        playerRb.gravityScale = 0.4f;
+        playerRb.gravityScale = 0.4f;       
 
-        // 6초 후 삭제`
+        // 4초 후 삭제
         Destroy(playerRb.gameObject, 4f);
 
         Debug.Log("사망");
@@ -137,8 +140,11 @@ public class Gamemanager : MonoBehaviour
     {
         while (true)
         {
-            if (gameOver == true) yield break;
-
+            if (gameOver == true)
+            {
+                Score.nowScore = bestHeight;
+                yield break;
+            }
             distance = Vector2.Distance(transform.position, playerTr.transform.position);
 
             // 높이 UI동기화 및 distance단위를 1의자리까지만 설정

@@ -35,8 +35,15 @@ public class SoundManager : MonoBehaviour
     // if 리턴
     private bool return_If;
 
+    private SoundManager soundManager_Test;
+    public SoundManager SoundManager_Test => soundManager_Test;
+
     private void Awake()
     {
+        // 중복 방지
+        if (soundManager_Test == null) soundManager_Test = this;
+        else if(soundManager_Test != this) Destroy(soundManager_Test);
+
         mainSound[0] = soundManager[0];
 
         // 시작화면 배경음악 키기        

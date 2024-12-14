@@ -31,10 +31,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject title;
 
     // 게임방법 및 버튼
-    [SerializeField] GameObject[] howToPlay;
-
-    // 캔버스
-    [SerializeField] CanvasScaler canvasScaler;
+    [SerializeField] GameObject[] howToPlay;    
 
     // 게임방법에 사용할 인덱스 > 감소해야 다음장면 나옴
     private int howToPlayIndex;    
