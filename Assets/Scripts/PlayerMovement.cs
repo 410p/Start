@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpBoost;
     private bool isBig;
     private bool isSmall;
+    
 
     //마지막 시간
     private float jumpPrevTime;
@@ -67,7 +68,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Camera mainCamera;
 
-    private GameObject Shield;
+    [SerializeField] private GameObject Shield;
+
+    [SerializeField] MoveParticles moveParticles;
 
     // 가만히 있는 적의 오브젝트 풀링
     [SerializeField] ObjectPooling enemy_Stationary;    
@@ -86,7 +89,9 @@ public class PlayerMovement : MonoBehaviour
         isBig = false;
         isSmall = false;
 
-        playerAnimator = GetComponent<Animator>();       
+        playerAnimator = GetComponent<Animator>();    
+        
+        moveParticles = GetComponent<MoveParticles>();
     }
 
     private void Start()
@@ -146,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 speed -= 200f;
                 isJumpBoost = false;
+                moveParticles.IsjumpBoost = false;
             }
             if (Time.time - bigPrevTime >= bigCooldown && isBig)
             {
@@ -234,6 +240,8 @@ public class PlayerMovement : MonoBehaviour
                 jumpPrevTime = Time.time;
 
                 objectPooling_Item.Return(collision.gameObject);
+
+                moveParticles.IsjumpBoost = true;
             }
             else if (collision.name.Contains("Item_BigMushroom"))
             {

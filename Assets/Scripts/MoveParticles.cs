@@ -8,10 +8,15 @@ public class MoveParticles : MonoBehaviour
 
     [SerializeField] private GameObject particle;
 
+    [SerializeField] private GameObject particle_Boost;
+
     [SerializeField] private GameObject genPoint;
+
+    public bool IsjumpBoost = false;
+
     //스폰 될 위치를 플레이어 오브젝트에 빈 오브젝트를 자식으로 설정
 
-    private void Start()
+    void Start()
     {
         StartCoroutine("GenParticles");
     }
@@ -22,8 +27,15 @@ public class MoveParticles : MonoBehaviour
         for(;;)
         {
             Debug.Log("Spawn");
-
-            Instantiate(particle, new Vector3 (genPoint.transform.position.x, genPoint.transform.position.y, genPoint.transform.position.z), Quaternion.identity);
+            if (IsjumpBoost == true)
+            {
+                Instantiate(particle_Boost, new Vector3(genPoint.transform.position.x, genPoint.transform.position.y, genPoint.transform.position.z), Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(particle, new Vector3(genPoint.transform.position.x, genPoint.transform.position.y, genPoint.transform.position.z), Quaternion.identity);
+            }
+            
 
             yield return new WaitForSeconds(genTime);
         }
