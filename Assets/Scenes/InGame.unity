@@ -1018,6 +1018,8 @@ Transform:
   - {fileID: 863687187}
   - {fileID: 478654203}
   - {fileID: 2122630593}
+  - {fileID: 1508708733}
+  - {fileID: 1690900622}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &720832865
@@ -1355,7 +1357,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 60}
+  m_Size: {x: 2, y: 60}
   m_EdgeRadius: 0
 --- !u!1 &889800678
 GameObject:
@@ -1662,7 +1664,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 60}
+  m_Size: {x: 2, y: 60}
   m_EdgeRadius: 0
 --- !u!1 &1264811513
 GameObject:
@@ -1781,7 +1783,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -628890631
   m_SortingLayer: 3
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: f54d95d22df687747b247fa9d7b23f3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1908,9 +1910,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   genTime: 0.15
+  genTime_Boost: 0
   particle: {fileID: 1277123362688756277, guid: ff86bc74eb0f7b94c94b6a2bb51745f4, type: 3}
   particle_Boost: {fileID: 8865127343543967795, guid: a7b510b12395a364fbfb8512990ce51f, type: 3}
   genPoint: {fileID: 640923261}
+  particle_Pool: {fileID: 1508708734}
+  particle_Boost_Pool: {fileID: 1690900623}
   IsjumpBoost: 0
 --- !u!1 &1356489882
 GameObject:
@@ -1960,6 +1965,54 @@ MonoBehaviour:
   defaultCapacity: 5
   maxSize: 20
   poolParent: {fileID: 1356489883}
+--- !u!1 &1508708732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1508708733}
+  - component: {fileID: 1508708734}
+  m_Layer: 0
+  m_Name: particle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1508708733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508708732}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 720832863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1508708734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508708732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e4739e24c3f7b47b7bb881dda60b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1277123362688756277, guid: ff86bc74eb0f7b94c94b6a2bb51745f4, type: 3}
+  defaultCapacity: 10
+  maxSize: 30
+  poolParent: {fileID: 1508708733}
 --- !u!1 &1630960147
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,6 +2090,54 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 30, y: 76.016846}
   m_EdgeRadius: 0
+--- !u!1 &1690900621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1690900622}
+  - component: {fileID: 1690900623}
+  m_Layer: 0
+  m_Name: particle_Boost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1690900622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690900621}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 720832863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1690900623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690900621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e4739e24c3f7b47b7bb881dda60b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8865127343543967795, guid: a7b510b12395a364fbfb8512990ce51f, type: 3}
+  defaultCapacity: 40
+  maxSize: 60
+  poolParent: {fileID: 1690900622}
 --- !u!1 &1726693024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,7 +2632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8168087971633139317, guid: 793b85af0f994c14fa527cdcb0ae1ed1, type: 3}
   defaultCapacity: 5
-  maxSize: 20
+  maxSize: 10
   poolParent: {fileID: 2122630593}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

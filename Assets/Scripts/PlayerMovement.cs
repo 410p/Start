@@ -73,9 +73,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] MoveParticles moveParticles;
 
     // 가만히 있는 적의 오브젝트 풀링
-    [SerializeField] ObjectPooling enemy_Stationary;    
+    [SerializeField] ObjectPooling enemy_Stationary;
+
+    // 움직일 수 있는지?
+    private bool isMove = true;
     private void Awake()
-    {
+    {        
         // 할당
 
         mainCamera = Camera.main; 
@@ -137,12 +140,14 @@ public class PlayerMovement : MonoBehaviour
             #endregion
 
             #region 이동 구현                                   
+            if (isMove)
+            {
+                // 캐릭터의 총 도착지점
+                endPos = new Vector2(mainCamera.ScreenPointToRay(Input.mousePosition).origin.x, transform.position.y);
 
-            // 캐릭터의 총 도착지점
-            endPos = new Vector2(mainCamera.ScreenPointToRay(Input.mousePosition).origin.x, transform.position.y);
-
-            // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 
-            transform.position = Vector2.Lerp(transform.position, endPos, 0.03F);
+                // 선형보간 사용으로 > 위치 이동할시 일정한 비율로 endPos 도착 
+                transform.position = Vector2.Lerp(transform.position, endPos, 0.01f);
+            }
 
             #endregion
 
@@ -171,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
             }
             #endregion
         }
+        //Debug.Log(Input.GetAxisRaw("Mouse X"));
     }
     Collider2D c2;
 
@@ -412,6 +418,51 @@ public class PlayerMovement : MonoBehaviour
 
             // 폭발 코루틴 호출
             StartCoroutine(collision.GetComponent<HorizontalEnemy>().Explosion());
+
+        }
+
+        #endregion        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        #region// 벽에 닿았는지?
+        // 왼쪽에 닿았는지?
+        if (collision.CompareTag("Left Collider"))
+        {
+            // 오른쪽으로 드래그 중이라면
+            if (Input.GetAxisRaw("Mouse X") >= 0.01 && mainCamera.ScreenPointToRay(Input.mousePosition).origin.x > collision.offset.x)
+            {
+                isMove = true;
+            }
+            // 왼쪽으로 드래그 중이라면
+            else if (Input.GetAxisRaw("Mouse X") <= -0.01)
+            {
+                isMove = false;
+            }
+            else
+            {
+                isMove = false;
+            }
+
+        }
+        // 오른쪽에 닿았는지?
+        else if (collision.CompareTag("Right Collider"))
+        {
+            // 오른쪽으로 드래그 중이라면
+            if (Input.GetAxisRaw("Mouse X") >= 0.01)
+            {
+                isMove = false;
+            }
+            // 왼쪽으로 드래그 중이라면
+            else if (Input.GetAxisRaw("Mouse X") <= -0.01 && mainCamera.ScreenPointToRay(Input.mousePosition).origin.x < collision.offset.x)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
 
         }
 

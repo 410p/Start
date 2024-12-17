@@ -85,7 +85,7 @@ public class Gamemanager : MonoBehaviour
     }
 
     private void Update()
-    {
+    {       
         // Update¹® ºÐ±â
         if (gameStart == true) return;
 
