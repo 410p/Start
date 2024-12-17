@@ -152,6 +152,10 @@ public class PlayerMovement : MonoBehaviour
             #endregion
 
             #region 아이템 시간 구현
+
+            PlayerAnimator.SetFloat("Shield_Time", Time.time - shieldPrevTime);
+            PlayerAnimator.SetBool("IsShield", isShield);
+
             if (Time.time - jumpPrevTime >= jumpBoostCooldown && isJumpBoost)
             {
                 speed -= 200f;
