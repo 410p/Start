@@ -6,6 +6,8 @@ public class MoveParticles : MonoBehaviour
 {
     [SerializeField] private float genTime;
 
+    [SerializeField] private float genTime_Boost;
+
     [SerializeField] private GameObject particle;
 
     [SerializeField] private GameObject particle_Boost;
@@ -30,14 +32,13 @@ public class MoveParticles : MonoBehaviour
             if (IsjumpBoost == true)
             {
                 Instantiate(particle_Boost, new Vector3(genPoint.transform.position.x, genPoint.transform.position.y, genPoint.transform.position.z), Quaternion.identity);
+                yield return new WaitForSeconds(genTime);
             }
             else
             {
                 Instantiate(particle, new Vector3(genPoint.transform.position.x, genPoint.transform.position.y, genPoint.transform.position.z), Quaternion.identity);
+                yield return new WaitForSeconds(genTime_Boost);
             }
-            
-
-            yield return new WaitForSeconds(genTime);
         }
     }
 }
