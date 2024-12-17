@@ -181,6 +181,11 @@ public class PlayerMovement : MonoBehaviour
             #endregion
         }
         //Debug.Log(Input.GetAxisRaw("Mouse X"));
+
+        if (!isShield)
+        {
+            Shield.SetActive(false);
+        }
     }
     Collider2D c2;
 
