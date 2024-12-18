@@ -75,7 +75,7 @@ public class GameOver : MonoBehaviour
         quitButton.onClick.AddListener(QuitButton);
 
         // 텍스트 할당
-        score.text = $"현재 기록\n{Score.nowScore:#}M!";
+        score.text = $"현재 기록\n{Score.nowScore:#}m!";
 
         // 현재기록이 최고기록보다 크다면
         if (Score.nowScore > bestScore)
