@@ -69,7 +69,7 @@ public class Respawn : MonoBehaviour
         spawnmanager = gamemanager.GetComponent<Spawnmanager>();
 
         planet_Interval_other = 15;
-        enemy_Interval = 25;
+        enemy_Interval = 18;
         item_Interval = 30;
 
     }
@@ -108,12 +108,12 @@ public class Respawn : MonoBehaviour
                 // 몇 번 진행 했는지 알려는 변수
                 planet_Interval_Count_other++;
 
-                // 8번 지났다면 
-                if (planet_Interval_Count_other > 8)
+                // 4번 지났다면 
+                if (planet_Interval_Count_other > 4)
                 {
                     planet_Interval_Count_other = 0;
 
-                    planet_Interval_other--;
+                    planet_Interval_other--;                    
 
                 }
             }
@@ -125,8 +125,8 @@ public class Respawn : MonoBehaviour
                 spawnCount_Planet_Enemy = 0;
                 enemy_Interval_Count++;
 
-                // 7번 지났다면 
-                if (enemy_Interval_Count > 7)
+                // 3번 지났다면 
+                if (enemy_Interval_Count > 4)
                 {
                     enemy_Interval_Count = 0;
 
@@ -142,8 +142,8 @@ public class Respawn : MonoBehaviour
                 item_Interval_Count++;
 
 
-                // 10번 지났다면 
-                if (planet_Interval_Count_other > 10)
+                // 2번 지났다면 
+                if (planet_Interval_Count_other > 4)
                 {
                     item_Interval_Count = 0;
 
